@@ -1,0 +1,14 @@
+﻿<div class="labeled-control">
+    <label style="width:100%;">
+        <span class="label" width="100%">@Label</span><br/>
+        <span class="control" width="100%">@Control</span>
+    </label>
+</div>
+
+@functions {
+    [Parameter]
+    private RenderFragment Label { get; set; }
+
+    [Parameter]
+    private RenderFragment Control { get; set; }
+}

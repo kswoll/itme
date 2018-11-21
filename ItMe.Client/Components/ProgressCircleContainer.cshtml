@@ -1,0 +1,16 @@
+﻿@if (IsLoading)
+{
+    <ProgressCircle />
+}
+else
+{
+    @ChildContent
+}
+
+@functions {
+    [Parameter]
+    private bool IsLoading { get; set; }
+
+    [Parameter]
+    private RenderFragment ChildContent { get; set; }
+}

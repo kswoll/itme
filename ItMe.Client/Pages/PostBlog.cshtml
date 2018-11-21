@@ -1,0 +1,40 @@
+﻿@page "/blog/post"
+@using ItMe.Shared.Models
+@inject HttpClient Http
+
+<InputForm Class="full-width" Width="400px;">
+    <ChildContent>
+        <LabeledControl>
+            <Label>Title</Label>
+            <Control><input type="text" name="title" bind="@title" /></Control>
+        </LabeledControl>
+        <LabeledControl>
+            <Label>Body</Label>
+            <Control><textarea oninput="@BodyChanged">@body</textarea></Control>
+        </LabeledControl>
+        <LabeledControl>
+            <Label>Preview</Label>
+            <Control>
+                <div style="min-height: 100px; max-height: 400px; width:100%; border: 1px black solid; overflow-y: auto;">
+                    @((MarkupString)CommonMark.CommonMarkConverter.Convert(body))
+                </div>
+            </Control>
+        </LabeledControl>
+    </ChildContent>
+    <ButtonBar>
+        <button type="submit">Post</button>
+    </ButtonBar>
+</InputForm>
+
+@functions {
+    private string title;
+    private string body;
+
+    private void BodyChanged(UIChangeEventArgs e)
+    {
+        body = (string)e.Value;
+        Console.WriteLine(e.Value);
+        Console.WriteLine(body);
+        StateHasChanged();
+    }
+}

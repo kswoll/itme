@@ -1,0 +1,28 @@
+﻿@page "/blog"
+@using ItMe.Shared.Models
+@inject HttpClient Http
+
+<ProgressCircleContainer IsLoading="@(person == null)">
+    <div class="title">
+        @person.Name
+    </div>
+    
+    <CardContainer>
+        <Card Uri="/blog/post">
+            <i class="fas fa-plus"></i>
+        </Card>
+    </CardContainer>
+
+</ProgressCircleContainer>
+
+@functions {
+    private PersonModel person;
+
+    protected override async Task OnInitAsync()
+    {
+        if (person == null)
+        {
+            person = await Http.GetJsonAsync<PersonModel>("api/persons/me");
+        }
+    }
+}
