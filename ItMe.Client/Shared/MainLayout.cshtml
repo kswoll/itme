@@ -1,8 +1,10 @@
 ﻿@using ItMe.Client.Utils
+@using ItMe.Shared.Models
 @using Microsoft.AspNetCore.Blazor.Services
 @inherits BlazorLayoutComponent
 @inject TokenManager TokenManager
 @inject IUriHelper UriHelper
+@inject HttpClient Http
 
 <div class="sidebar">
     <NavMenu />
@@ -25,15 +27,25 @@
             </div>
         }
     </div>
-
-    <div class="content px-4">
-        @Body
-    </div>
+    
+    <CascadingValue Value="@info">
+        <div class="content px-4">
+            @Body
+        </div>
+    </CascadingValue>
 </div>
 
 @functions {
-    protected override void OnInit()
+    private readonly GlobalInfo info = new GlobalInfo();
+
+    protected override async Task OnInitAsync()
     {
+        if (info.Person == null)
+        {
+            info.Person = await Http.GetJsonAsync<PersonModel>("api/persons/me");
+            Console.WriteLine(info.Person.Name);
+            await Interop.SetDocumentTitle(info.Person.Name);
+        }
     }
 
     private void SignOut()

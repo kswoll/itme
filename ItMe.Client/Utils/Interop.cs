@@ -11,9 +11,9 @@ namespace ItMe.Client.Utils
             return await JSRuntime.Current.InvokeAsync<bool>("interop.toggleClass", element, className);
         }
 
-        public static async Task SetWindowTitle(string title)
+        public static async Task SetDocumentTitle(string title)
         {
-            await JSRuntime.Current.InvokeAsync<object>("interop.setWindowTitle", title);
+            await JSRuntime.Current.InvokeAsync<object>("interop.setDocumentTitle", title);
         }
 
         public static async Task SetWindowLocation(string url)

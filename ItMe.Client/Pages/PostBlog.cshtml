@@ -1,21 +1,24 @@
 ﻿@page "/blog/post"
 @using ItMe.Shared.Models
+@using ItMe.Shared.Requests
+@using Microsoft.AspNetCore.Blazor.Services
 @inject HttpClient Http
+@inject IUriHelper Uri;
 
-<InputForm Class="full-width" Width="400px;">
+<InputForm Class="full-width" Width="400px;" OnSubmit="@SubmitPost">
     <ChildContent>
         <LabeledControl>
             <Label>Title</Label>
-            <Control><input type="text" name="title" bind="@title" /></Control>
+            <Control><input type="text" name="title" bind="@title" required /></Control>
         </LabeledControl>
         <LabeledControl>
             <Label>Body</Label>
-            <Control><textarea oninput="@BodyChanged">@body</textarea></Control>
+            <Control><textarea oninput="@BodyChanged" required>@body</textarea></Control>
         </LabeledControl>
         <LabeledControl>
             <Label>Preview</Label>
             <Control>
-                <div style="min-height: 100px; max-height: 400px; width:100%; border: 1px black solid; overflow-y: auto;">
+                <div style="min-height: 100px; max-height: 400px; width:100%; border: 1px darkgray solid; overflow-y: auto;">
                     @((MarkupString)CommonMark.CommonMarkConverter.Convert(body))
                 </div>
             </Control>
@@ -33,8 +36,16 @@
     private void BodyChanged(UIChangeEventArgs e)
     {
         body = (string)e.Value;
-        Console.WriteLine(e.Value);
-        Console.WriteLine(body);
         StateHasChanged();
+    }
+
+    private async Task SubmitPost()
+    {
+        var blogPost = await Http.PostJsonAsync<BlogPostModel>("api/blogs", new PutBlogPost
+        {
+            Title = title,
+            Body = body
+        });
+        Uri.NavigateTo(blogPost.Url);
     }
 }

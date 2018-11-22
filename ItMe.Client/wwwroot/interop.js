@@ -11,8 +11,8 @@ window.interop = {
         }
     },
 
-    setWindowTitle(title) {
-        window.title = title;
+    setDocumentTitle(title) {
+        document.title = title;
     },
 
     setWindowLocation(url) {

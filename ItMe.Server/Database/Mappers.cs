@@ -11,5 +11,16 @@ namespace ItMe.Server.Database
             Id = person.Id,
             Name = person.Name,
         };
+
+        public static Expression<Func<DbBlogPost, BlogPostModel>> MapBlogPost { get; } = post => new BlogPostModel
+        {
+            Id = post.Id,
+            Title = post.Title,
+            Body = post.Body,
+            Excerpt = post.Excerpt,
+            Slug = post.Slug,
+            Created = post.Created,
+            LastUpdated = post.LastUpdated
+        };
     }
 }
