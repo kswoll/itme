@@ -1,10 +1,13 @@
-﻿<a class="card card-add" href="@Uri">
+﻿<a href="@Uri" class="card @Class">
     @ChildContent
 </a>
 
 @functions {
     [Parameter]
     private RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    private string Class { get; set; }
 
     [Parameter]
     private string Uri { get; set; }

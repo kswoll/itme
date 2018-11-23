@@ -36,6 +36,12 @@ namespace ItMe.Server.Controllers
             return await db.BlogPosts.Where(x => x.Slug == slug).Select(Mappers.MapBlogPost).SingleAsync();
         }
 
+        [HttpGet]
+        public async Task<BlogPostModel[]> GetPosts(int offset = 0, int limit = 25)
+        {
+            return await db.BlogPosts.Skip(offset).Take(limit).Select(Mappers.MapBlogPost).ToArrayAsync();
+        }
+
         [HttpPost, Authorize]
         public async Task<BlogPostModel> CreatePost([FromBody]PutBlogPost post)
         {

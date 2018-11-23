@@ -43,6 +43,9 @@
     <Content Update="Components\LabeledControl.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Pages\BlogPost.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\PostBlog.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

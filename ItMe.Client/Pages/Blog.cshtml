@@ -3,13 +3,20 @@
 @using ItMe.Shared.Models
 @inject HttpClient Http
 
-<ProgressCircleContainer IsLoading="@(Info?.Person == null)">
+<ProgressCircleContainer IsLoading="@(Info?.Person == null || blogPosts == null)">
     <div class="title">
         @Info.Person.Name
     </div>
     
     <CardContainer>
-        <Card Uri="/blog/post">
+        @foreach (var blogPost in blogPosts)
+        {
+            <Card Uri="@($"/blog/{blogPost.Slug}")">
+                @blogPost.Title
+            </Card>
+        }
+
+        <Card Uri="/blog/post" Class="card-add">
             <i class="fas fa-plus"></i>
         </Card>
     </CardContainer>
@@ -19,4 +26,15 @@
 @functions {
     [CascadingParameter]
     private GlobalInfo Info { get; set; }
+
+    private BlogPostModel[] blogPosts;
+
+    protected override async Task OnInitAsync()
+    {
+        if (blogPosts == null)
+        {
+            blogPosts = await Http.GetJsonAsync<BlogPostModel[]>("api/blogs");
+        }
+    }
+
 }
