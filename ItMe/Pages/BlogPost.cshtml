@@ -1,0 +1,26 @@
+﻿@page "/blog/{slug}"
+@using ItMe.Utils
+@model BlogPostModel
+@inject TokenManager TokenManager
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="page-title">@Model.Person.Name</div>
+
+<div class="blog-post">
+    @if (TokenManager.IsLoggedIn)
+    {
+        <div class="toolbar">
+            <a href="/blog/@Model.BlogPost.Slug/edit"><i class="fas fa-edit"></i></a>
+        </div>
+    }
+
+    <div class="date">@Model.BlogPost.Created.ToString("MMM dd")</div>
+        
+    <div class="title">@Model.BlogPost.Title</div>
+        
+    <div class="body">
+        @Model.BlogPost.Body.ToMarkDown()
+    </div>
+</div>

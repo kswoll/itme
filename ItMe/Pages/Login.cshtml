@@ -1,0 +1,23 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<form method="POST">
+    <div class="labeled-control">
+        <label style="width:100%;">
+            <span class="label" width="100%">Email:</span><br/>
+            <span class="control" width="100%">
+                <input type="email" asp-for="Email" />
+            </span>
+        </label>
+        <label style="width:100%;">
+            <span class="label" width="100%">Password:</span><br/>
+            <span class="control" width="100%">
+                <input type="password" asp-for="Password" />
+            </span>
+        </label>
+    </div>
+    <input type="submit" value="Log In" />
+</form>

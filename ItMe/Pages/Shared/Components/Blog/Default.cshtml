@@ -1,0 +1,22 @@
+﻿@using ItMe.Utils
+@model ItMe.ViewModels.BlogViewComponentModel
+
+<div class="page-title">
+    @Model.Person.Name
+</div>
+    
+<div class="card-container">
+    @foreach (var blogPost in Model.BlogPosts)
+    {
+        <a class="card" href="@($"/blog/{blogPost.Slug}")">
+            <div class="date">@blogPost.Created.ToString("MMM dd")</div>
+            <div class="title">@blogPost.Title</div>
+            <hr>
+            <div class="body">@((blogPost.Excerpt ?? blogPost.Body.Summarize()).ToMarkDown(removeLinks: true))</div>
+        </a>
+    }
+
+    <a href="/blog/post" class="card card-add">
+        <i class="fas fa-plus"></i>
+    </a>
+</div>
