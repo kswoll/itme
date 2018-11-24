@@ -18,6 +18,9 @@
     <Content Update="Pages\BlogPost.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Pages\Logout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\Login.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
