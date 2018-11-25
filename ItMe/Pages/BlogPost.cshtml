@@ -3,7 +3,7 @@
 @model BlogPostModel
 @inject AuthManager AuthManager
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = @Model.BlogPost.Title;
 }
 
 <div class="page-title">@Model.Person.Name</div>

@@ -28,7 +28,7 @@ namespace ItMe.Utils
 
                 markdown = document.DocumentNode.OuterHtml;
             }
-            return new HtmlString(markdown);
+            return new HtmlString($"<div class=\"markdown\">{markdown}</div>");
         }
     }
 }

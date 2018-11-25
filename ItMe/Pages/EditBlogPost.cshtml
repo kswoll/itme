@@ -1,7 +1,7 @@
 ﻿@page "/blog/{slug}/edit"
 @model EditBlogPostModel
 
-<form class="full-width" style="width:800px;" method="POST">
+<form class="full-width" style="width:100%;" method="POST">
     <labeled-control>
         <lc-label>Title</lc-label>
         <lc-control><input type="text" required asp-for="Title" /></lc-control>
@@ -10,13 +10,13 @@
         <labeled-control>
             <lc-label>Body</lc-label>
             <lc-control>
-                <textarea oninput="updatePreview('post-preview', this.value)" required asp-for="@Model.Body" style="height: 300px;" id="post-body"></textarea>
+                <textarea oninput="updatePreview('post-body-preview', this.value)" required asp-for="@Model.Body" style="height: 300px;" id="post-body" class="editor"></textarea>
             </lc-control>
         </labeled-control>
         <labeled-control>
             <lc-label>Preview</lc-label>
             <lc-control>
-                <div style="height: 300px;" id="post-preview" class="preview">
+                <div style="height: 300px;" id="post-body-preview" class="preview">
                 </div>
             </lc-control>
         </labeled-control>
@@ -43,11 +43,13 @@
 
 <script>
     function updatePreview(preview, value) {
+        console.log(preview);
         document.getElementById(preview).innerHTML = toMarkDown(value);
     }
 
-    window.addEventListener("load", () => {
-        updatePreview('post-preview', document.getElementById('post-body').value);
-        updatePreview('post-excerpt-preview', document.getElementById('post-excerpt').value);
-    });
+    updatePreview('post-body-preview', document.getElementById('post-body').value);
+    updatePreview('post-excerpt-preview', document.getElementById('post-excerpt').value);
+
+    synchronizeScroll("post-body", "post-body-preview");
+    synchronizeScroll("post-excerpt", "post-excerpt-preview");
 </script>

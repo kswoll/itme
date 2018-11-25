@@ -271,7 +271,13 @@ footer {
 }
 
 .preview {
-    width: 100%;
     border: 1px darkgray solid;
+    width: 542.5px;
     overflow-y: auto;
+    overflow-x: auto;
+}
+
+.markdown pre {
+    padding: 15px;
+    background-color: #FAFAFA;
 }

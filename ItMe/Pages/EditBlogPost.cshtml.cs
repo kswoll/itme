@@ -38,10 +38,13 @@ namespace ItMe.Pages
         {
             var host = HttpContext.Request.Host.Host;
             Person = await db.Persons.Where(x => x.Host == host).Select(Mappers.MapPerson).SingleAsync();
-            var dbBlogPost = await db.BlogPosts.Where(x => x.PersonId == Person.Id && x.Slug == slug).SingleAsync();
-            Title = dbBlogPost.Title;
-            Body = dbBlogPost.Body;
-            Excerpt = dbBlogPost.Excerpt;
+            var dbBlogPost = await db.BlogPosts.Where(x => x.PersonId == Person.Id && x.Slug == slug).SingleOrDefaultAsync();
+            if (dbBlogPost != null)
+            {
+                Title = dbBlogPost.Title;
+                Body = dbBlogPost.Body;
+                Excerpt = dbBlogPost.Excerpt;
+            }
         }
 
         public async Task<IActionResult> OnPostAsync(string slug)
@@ -55,6 +58,7 @@ namespace ItMe.Pages
                 db.BlogPosts.Add(dbBlogPost);
                 dbBlogPost.Slug = await GenerateSlug(Title);
                 dbBlogPost.Created = DateTime.UtcNow;
+                dbBlogPost.PersonId = Person.Id;
             }
             dbBlogPost.Title = Title;
             dbBlogPost.Body = Body;
@@ -62,7 +66,7 @@ namespace ItMe.Pages
             dbBlogPost.LastUpdated = DateTime.UtcNow;
             await db.SaveChangesAsync();
 
-            return RedirectToPage("BlogPost", new { slug });
+            return RedirectToPage("BlogPost", new { dbBlogPost.Slug });
         }
 
         private async Task<string> GenerateSlug(string title)
