@@ -163,11 +163,13 @@ app {
     margin: 10px;
     padding: 10px;
     color: black;
+    background-color: #EEE;
 }
 
 .card:hover {
     text-decoration: none;
     color: black;
+    background-color: #DDD;
 }
 
 .card div.date {
@@ -188,9 +190,9 @@ app {
     font-size: 3em;
 }
 
-    .card-add:hover {
-        text-decoration: none;
-    }
+.card-add:hover {
+    text-decoration: none;
+}
 
 .blog-post {
     width: 600px;
@@ -216,7 +218,9 @@ app {
     text-align: center;
 }
 
-.blog-post hr {
+.blog-post hr, .card-container hr {
+    border-top: 1px #30cef5 solid;
+    width: 80%;
 }
 
 .blog-post .author {
@@ -224,8 +228,8 @@ app {
 
 .blog-post .body {
     margin-top: 50px;
-    color: #AAA;
-    font-family: minion-pro;
+    color: #888;
+    font-family: Comfortaa;
     font-size: 1.2em;
     line-height: 1.4;
 }
@@ -248,4 +252,26 @@ input[type=text] {
 
 select {
     padding: 4px 1px;
+}
+
+.label {
+    color: black;
+}
+
+footer {
+    color: #AAA;
+    display: flex;
+    justify-content: space-between;
+}
+
+.side-by-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 25px;
+}
+
+.preview {
+    width: 100%;
+    border: 1px darkgray solid;
+    overflow-y: auto;
 }

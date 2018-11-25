@@ -1,40 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ItMe.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace ItMe.Utils
 {
-    public class TokenManager
+    public class AuthManager
     {
-        public JwtToken Token { get; private set; }
-        public event Action LoggedOut;
-        public event Action LoggedIn;
-
-        private const string storageKey = "Token";
-
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly HashSet<FeatureType> features = new HashSet<FeatureType>();
 
-        public TokenManager(IHttpContextAccessor httpContextAccessor)
+        public AuthManager(IHttpContextAccessor httpContextAccessor)
         {
             this.httpContextAccessor = httpContextAccessor;
 
-            var existingToken = httpContextAccessor.HttpContext.Request.Cookies[storageKey];
-            if (existingToken != null)
+            var user = httpContextAccessor.HttpContext.User;
+            if (user.Identity.IsAuthenticated)
             {
-                LoadToken(existingToken);
-            }
-        }
-
-        private void LoadToken(string token)
-        {
-            Token = JwtToken.Parse(token);
-            foreach (var featureClaim in Token.Payload.Where(x => x.Key.StartsWith("feature:")))
-            {
-                var feature = featureClaim.Key.Split(':')[1].Parse<FeatureType>();
-                features.Add(feature);
+                foreach (var featureClaim in user.Claims.Where(x => x.Type.StartsWith("feature:")))
+                {
+                    var feature = featureClaim.Type.Split(':')[1].Parse<FeatureType>();
+                    features.Add(feature);
+                }
             }
         }
 
@@ -43,7 +30,8 @@ namespace ItMe.Utils
             return features.Contains(feature);
         }
 
-        public bool IsLoggedIn => Token != null;
+        public bool IsLoggedIn => httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+/*
 
         public void ProcessLogin(string token)
         {
@@ -61,5 +49,6 @@ namespace ItMe.Utils
             Token = null;
             LoggedOut?.Invoke();
         }
+*/
     }
 }

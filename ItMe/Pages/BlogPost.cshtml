@@ -1,7 +1,7 @@
 ﻿@page "/blog/{slug}"
 @using ItMe.Utils
 @model BlogPostModel
-@inject TokenManager TokenManager
+@inject AuthManager AuthManager
 @{
     ViewData["Title"] = "Home page";
 }
@@ -9,7 +9,7 @@
 <div class="page-title">@Model.Person.Name</div>
 
 <div class="blog-post">
-    @if (TokenManager.IsLoggedIn)
+    @if (AuthManager.IsLoggedIn)
     {
         <div class="toolbar">
             <a href="/blog/@Model.BlogPost.Slug/edit"><i class="fas fa-edit"></i></a>
@@ -20,6 +20,8 @@
         
     <div class="title">@Model.BlogPost.Title</div>
         
+    <hr />
+
     <div class="body">
         @Model.BlogPost.Body.ToMarkDown()
     </div>

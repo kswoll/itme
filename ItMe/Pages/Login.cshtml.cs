@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ItMe.Database;
 using ItMe.Utils;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -22,12 +24,12 @@ namespace ItMe.Pages
         public string Password { get; set; }
 
         private readonly ItMeDb db;
-        private readonly TokenManager tokenManager;
+        private readonly AuthManager authManager;
 
-        public LoginModel(ItMeDb db, TokenManager tokenManager)
+        public LoginModel(ItMeDb db, AuthManager authManager)
         {
             this.db = db;
-            this.tokenManager = tokenManager;
+            this.authManager = authManager;
         }
 
         public void OnGet()
@@ -49,7 +51,16 @@ namespace ItMe.Pages
             if (personLogin == null || !PasswordUtils.IsValid(Password, personLogin.PasswordHash))
                 return new UnauthorizedResult();
 
-            tokenManager.ProcessLogin(GenerateToken(personLogin));
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Name, personLogin.Person.Name),
+                new Claim(ClaimTypes.Email, personLogin.Person.Email),
+                new Claim(ClaimTypes.NameIdentifier, personLogin.Person.Id.ToString())
+            };
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties { };
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+//            tokenManager.ProcessLogin(GenerateToken(personLogin));
             return RedirectToPage("/Index");
         }
 
@@ -64,9 +75,6 @@ namespace ItMe.Pages
 
             var baseClaims = new[]
             {
-                new Claim(ClaimTypes.Name, person.Name),
-                new Claim(ClaimTypes.Email, personLogin.Person.Email),
-                new Claim(ClaimTypes.NameIdentifier, personLogin.Person.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
                 new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddYears(1)).ToUnixTimeSeconds().ToString())
             };

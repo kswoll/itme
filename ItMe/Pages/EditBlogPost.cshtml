@@ -1,0 +1,53 @@
+﻿@page "/blog/{slug}/edit"
+@model EditBlogPostModel
+
+<form class="full-width" style="width:800px;" method="POST">
+    <labeled-control>
+        <lc-label>Title</lc-label>
+        <lc-control><input type="text" required asp-for="Title" /></lc-control>
+    </labeled-control>
+    <div class="side-by-side">
+        <labeled-control>
+            <lc-label>Body</lc-label>
+            <lc-control>
+                <textarea oninput="updatePreview('post-preview', this.value)" required asp-for="@Model.Body" style="height: 300px;" id="post-body"></textarea>
+            </lc-control>
+        </labeled-control>
+        <labeled-control>
+            <lc-label>Preview</lc-label>
+            <lc-control>
+                <div style="height: 300px;" id="post-preview" class="preview">
+                </div>
+            </lc-control>
+        </labeled-control>
+    </div>
+    <div class="side-by-side">
+        <labeled-control>
+            <lc-label>Excerpt (optional)</lc-label>
+            <lc-control>
+                <textarea oninput="updatePreview('post-excerpt-preview', this.value)" asp-for="Excerpt" style="height: 200px;" id="post-excerpt"></textarea>
+            </lc-control>
+        </labeled-control>
+        <labeled-control>
+            <lc-label>Preview</lc-label>
+            <lc-control>
+                <div style="height: 200px;" id="post-excerpt-preview" class="preview">
+                </div>
+            </lc-control>
+        </labeled-control>
+    </div>
+    <div class="form-buttons">
+        <button type="submit">Publish</button>
+    </div>
+</form>
+
+<script>
+    function updatePreview(preview, value) {
+        document.getElementById(preview).innerHTML = toMarkDown(value);
+    }
+
+    window.addEventListener("load", () => {
+        updatePreview('post-preview', document.getElementById('post-body').value);
+        updatePreview('post-excerpt-preview', document.getElementById('post-excerpt').value);
+    });
+</script>

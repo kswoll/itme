@@ -1,5 +1,6 @@
 ﻿@using ItMe.Utils
 @model ItMe.ViewModels.BlogViewComponentModel
+@inject AuthManager AuthManager
 
 <div class="page-title">
     @Model.Person.Name
@@ -15,8 +16,11 @@
             <div class="body">@((blogPost.Excerpt ?? blogPost.Body.Summarize()).ToMarkDown(removeLinks: true))</div>
         </a>
     }
-
-    <a href="/blog/post" class="card card-add">
-        <i class="fas fa-plus"></i>
-    </a>
+    
+    @if (AuthManager.IsLoggedIn)
+    {
+        <a href="/blog/post" class="card card-add">
+            <i class="fas fa-plus"></i>
+        </a>
+    }
 </div>

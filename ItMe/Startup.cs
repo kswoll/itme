@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using ItMe.Database;
 using ItMe.Utils;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,8 @@ namespace ItMe
             services.AddDbContext<ItMeDb>(options => options.UseSqlServer(connection));
 
             services.AddHttpContextAccessor();
-            services.AddTransient<TokenManager>();
+            services.AddScoped<AuthManager>();
+            services.AddScoped<GlobalsManager>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -38,26 +40,7 @@ namespace ItMe
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services
-                .AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = "JwtBearer";
-                    options.DefaultChallengeScheme = "JwtBearer";
-                })
-                .AddJwtBearer("JwtBearer", options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("LaddlerLaddlerLaddler")),
-                        ValidateIssuer = false,
-                        //ValidIssuer = "The name of the issuer",
-                        ValidateAudience = false,
-                        //ValidAudience = "The name of the audience",
-                        ValidateLifetime = true, //validate the expiration and not before values in the token
-                        ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
-                    };
-                });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

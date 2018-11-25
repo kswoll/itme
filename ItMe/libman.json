@@ -1,0 +1,11 @@
+{
+    "version": "1.0",
+    "defaultProvider": "cdnjs",
+    "libraries": [
+        {
+            "library": "commonmark@0.28.1",
+            "destination": "wwwroot/js/lib",
+            "files": [ "commonmark.min.js" ]
+        }
+    ] 
+}
