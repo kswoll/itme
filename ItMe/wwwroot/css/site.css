@@ -180,7 +180,7 @@ app {
 
 .card div.title {
     font-family: Playfair Display;
-    font-size: 2.5em;
+    font-size: 1.75em;
 }
 
 .card-add {
@@ -258,7 +258,7 @@ select {
     color: black;
 }
 
-footer {
+footer > div {
     color: #AAA;
     display: flex;
     justify-content: space-between;
@@ -280,4 +280,14 @@ footer {
 .markdown pre {
     padding: 15px;
     background-color: #FAFAFA;
+}
+
+.tab-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.tab-bar > div {
+    padding: 10px;
 }
