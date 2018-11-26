@@ -1,10 +1,6 @@
 ﻿@using ItMe.Utils
 @model ItMe.ViewModels.BlogViewComponentModel
 @inject AuthManager AuthManager
-
-<div class="page-title">
-    @Model.Person.Name
-</div>
     
 <div class="card-container">
     @foreach (var blogPost in Model.BlogPosts)

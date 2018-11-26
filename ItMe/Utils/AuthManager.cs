@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using ItMe.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 
 namespace ItMe.Utils
@@ -31,24 +35,23 @@ namespace ItMe.Utils
         }
 
         public bool IsLoggedIn => httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
-/*
 
-        public void ProcessLogin(string token)
+        public async Task ProcessLogin(string name, string email, int id)
         {
-            httpContextAccessor.HttpContext.Response.Cookies.Append(storageKey, token, new CookieOptions
+            var claims = new[]
             {
-                Expires = new DateTimeOffset(DateTime.UtcNow.AddYears(5))
-            });
-            LoadToken(token);
-            LoggedIn?.Invoke();
+                new Claim(ClaimTypes.Name, name),
+                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.NameIdentifier, id.ToString())
+            };
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties { };
+            await httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
         }
 
-        public void ProcessLogout()
+        public async Task ProcessLogout()
         {
-            httpContextAccessor.HttpContext.Response.Cookies.Delete(storageKey);
-            Token = null;
-            LoggedOut?.Invoke();
+            await httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
-*/
     }
 }

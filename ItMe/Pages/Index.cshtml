@@ -1,9 +1,13 @@
 ﻿@page
+@using ItMe.Utils
 @using ViewComponents
+@inject GlobalsManager Globals
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-
-@await Component.InvokeAsync("Blog")
+@if (Globals.Person != null)
+{
+    @await Component.InvokeAsync("Blog")
+}

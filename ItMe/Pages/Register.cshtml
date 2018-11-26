@@ -1,0 +1,27 @@
+﻿@page
+@model RegisterModel
+
+<form method="POST">
+    <labeled-control>
+        <lc-label>Name:</lc-label>
+        <lc-control><input type="text" asp-for="Name" /></lc-control>
+    </labeled-control>
+    <labeled-control>
+        <lc-label>Email:</lc-label>
+        <lc-control><input type="email" asp-for="Email" /></lc-control>
+    </labeled-control>
+    <labeled-control>
+        <lc-label>Password:</lc-label>
+        <lc-control><input type="password" asp-for="Password" /></lc-control>
+    </labeled-control>
+    <labeled-control>
+        <lc-label>Host:</lc-label>
+        <lc-control><input type="text" asp-for="Host" /></lc-control>
+    </labeled-control>
+    <labeled-control>
+        <lc-label>Port:</lc-label>
+        <lc-control><input type="number" asp-for="Port" /></lc-control>
+    </labeled-control>
+    
+    <button type="submit">Register</button>
+</form>

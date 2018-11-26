@@ -18,14 +18,10 @@ namespace ItMe.Utils
         {
             this.db = db;
             this.httpContextAccessor = httpContextAccessor;
-        }
-
-        public async Task InitializeAsync()
-        {
-            Person = await db.Persons
+            Person = db.Persons
                 .Where(x => x.Host == httpContextAccessor.HttpContext.Request.Host.Host)
                 .Select(Mappers.MapPerson)
-                .SingleAsync();
+                .SingleOrDefault();
         }
     }
 }

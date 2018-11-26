@@ -2,16 +2,12 @@
 @inject AuthManager AuthManager
 @inject GlobalsManager GlobalsManager
 
-@{
-    await GlobalsManager.InitializeAsync();
-}
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>@ViewData["Title"] - @GlobalsManager.Person.Name</title>
+        <title>@ViewData["Title"] - @(GlobalsManager.Person?.Name ?? "Admin")</title>
 
         <environment include="Development">
             <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css"/>
@@ -47,18 +43,23 @@
         @RenderSection("Scripts", required: false)
     </head>
     <body>
-        <div class="page-title">@GlobalsManager.Person.Name</div>
+        <div class="page-title">@(GlobalsManager.Person?.Name ?? "Admin")</div>
     
         <div class="container body-content">
             @RenderBody()
             <hr style="margin-top: 100px;" />
             <footer>
                 <div>
-                    <p>&copy; 2018 - @GlobalsManager.Person.Name</p>
+                    <p>&copy; 2018 - @(GlobalsManager.Person?.Name ?? "Kirk Woll")</p>
                     <p>
                         @if (!AuthManager.IsLoggedIn)
                         {
                             <a href="Login">Log In</a>
+
+                            if (GlobalsManager.Person == null)
+                            {
+                                <text> or </text><a href="Register">Register</a>
+                            }
                         }
                         else
                         {
