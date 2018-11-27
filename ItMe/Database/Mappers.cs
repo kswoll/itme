@@ -10,6 +10,7 @@ namespace ItMe.Database
         {
             Id = person.Id,
             Name = person.Name,
+            FavIconS3Key = person.FavIconS3Key
         };
 
         public static Expression<Func<DbBlogPost, BlogPost>> MapBlogPost { get; } = post => new BlogPost

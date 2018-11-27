@@ -9,9 +9,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>@ViewData["Title"] - @(GlobalsManager.Person?.Name ?? "Admin")</title>
         
-        @if (GlobalsManager.Person?.FavIcon != null)
+        @if (GlobalsManager.Person?.FavIconS3Url != null)
         {
-            <link rel="icon" href="@GlobalsManager.Person?.FavIcon" type="image/x-icon" />
+            <link rel="icon" href="@GlobalsManager.Person?.FavIconS3Url" type="image/x-icon" />
         }
 
         <environment include="Development">
@@ -76,6 +76,10 @@
                 <div class="tab-bar">
                     <div><a href="/">Blog</a></div>
                     <div><a href="/cv">CV</a></div>
+                    @if (AuthManager.IsLoggedIn)
+                    {
+                        <div><a href="/settings">Settings</a></div>
+                    }
                 </div>
 
 

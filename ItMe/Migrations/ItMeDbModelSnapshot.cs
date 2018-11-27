@@ -74,6 +74,8 @@ namespace ItMe.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
+                    b.Property<string>("FavIconS3Key");
+
                     b.Property<string>("Host")
                         .IsRequired();
 

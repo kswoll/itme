@@ -17,6 +17,8 @@ namespace ItMe.Database
         [Required]
         public int Port { get; set; }
 
+        public string FavIconS3Key { get; set; }
+
         public List<DbFeature> Features { get; set; }
     }
 }

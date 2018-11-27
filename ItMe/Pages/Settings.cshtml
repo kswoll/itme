@@ -1,0 +1,24 @@
+﻿@page
+@using ItMe.Utils
+@model ItMe.Pages.SettingsModel
+@inject GlobalsManager Globals;
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<form method="POST" enctype="multipart/form-data">
+    <labeled-control>
+        <lc-label>Favorite Icon (favicon.ico):</lc-label>
+        <lc-control>
+            @if (Globals.Person?.FavIconS3Key != null)
+            {
+                <img src="@Globals.Person.FavIconS3Url" />
+            }
+            <input type="file" name="file" />
+        </lc-control>
+    </labeled-control>
+    
+    <button type="submit">Upload</button>
+</form>
+
