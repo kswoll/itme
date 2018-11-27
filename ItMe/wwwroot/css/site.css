@@ -218,9 +218,15 @@ app {
     text-align: center;
 }
 
-.blog-post hr, .card-container hr {
+.blog-post hr {
     border-top: 1px #30cef5 solid;
     width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-container hr {
+    border-top: 1px #30cef5 solid;
 }
 
 .blog-post .author {
