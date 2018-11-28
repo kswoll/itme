@@ -26,7 +26,7 @@ namespace ItMe
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=ItMeDb;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Data Source=localhost;Initial Catalog=ItMe;Integrated Security=True";
             services.AddDbContext<ItMeDb>(options => options.UseSqlServer(connection));
 
             services.AddHttpContextAccessor();
@@ -64,6 +64,12 @@ namespace ItMe
             app.UseCookiePolicy();
 
             app.UseMvc();
+
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<ItMeDb>();
+                context.Database.Migrate();
+            }
         }
     }
 }
