@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ItMe.Utils;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ItMe.Database
 {
@@ -20,6 +22,12 @@ namespace ItMe.Database
             modelBuilder.Entity<DbPerson>().HasIndex(x => x.Email).IsUnique();
             modelBuilder.Entity<DbPerson>().HasIndex(x => x.Host).IsUnique();
             modelBuilder.Entity<DbBlogPost>().HasIndex(x => new { x.PersonId, x.Slug }).IsUnique();
+
+            var partialFieldConverter = new ValueConverter<PartialDate, string>(
+                x => x.Encode(),
+                x => PartialDate.Decode(x));
+            modelBuilder.Entity<DbJob>().Property(x => x.Start).HasConversion(partialFieldConverter);
+            modelBuilder.Entity<DbJob>().Property(x => x.End).HasConversion(partialFieldConverter);
         }
     }
 }
