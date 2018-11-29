@@ -288,6 +288,11 @@ footer > div {
     background-color: #FAFAFA;
 }
 
+.markdown blockquote {
+    border-left: 5px lightgray solid;
+    padding-left: 10px;
+}
+
 .tab-bar {
     display: flex;
     flex-direction: row;
