@@ -7,7 +7,13 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>@ViewData["Title"] - @(GlobalsManager.Person?.Name ?? "Admin")</title>
+        <title>
+            @if (!string.IsNullOrEmpty((string)ViewData["Title"]))
+            {
+                <text>@ViewData["Title"] - </text>
+            }
+            @(GlobalsManager.Person?.Name ?? "Admin")
+        </title>
         
         @if (GlobalsManager.Person?.FavIconS3Url != null)
         {
