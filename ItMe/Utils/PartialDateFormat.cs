@@ -22,7 +22,7 @@ namespace ItMe.Utils
                     Format = "MMM";
                     break;
                 case PartialDateField.Day:
-                    Format = "dd";
+                    Format = "d";
                     break;
             }
         }
@@ -48,7 +48,7 @@ namespace ItMe.Utils
 
         public static implicit operator PartialDateFormat(string literal)
         {
-            return new PartialDateFormat(PartialDateField.PrefixLiteral);
+            return Suffix(literal);
         }
 
         public static PartialDateFormat Prefix(string prefixLiteral)

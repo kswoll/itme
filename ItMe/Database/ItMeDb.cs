@@ -10,6 +10,8 @@ namespace ItMe.Database
         public DbSet<DbPersonLogin> PersonLogins { get; set; }
         public DbSet<DbFeature> Features { get; set; }
         public DbSet<DbBlogPost> BlogPosts { get; set; }
+        public DbSet<DbCv> Cvs { get; set; }
+        public DbSet<DbJob> Jobs { get; set; }
 
         public ItMeDb(DbContextOptions options) : base(options)
         {

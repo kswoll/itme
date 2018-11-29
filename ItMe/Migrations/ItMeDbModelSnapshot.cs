@@ -48,6 +48,21 @@ namespace ItMe.Migrations
                     b.ToTable("BlogPosts");
                 });
 
+            modelBuilder.Entity("ItMe.Database.DbCv", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PersonId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Cvs");
+                });
+
             modelBuilder.Entity("ItMe.Database.DbFeature", b =>
                 {
                     b.Property<int>("Id")
@@ -63,6 +78,33 @@ namespace ItMe.Migrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("Features");
+                });
+
+            modelBuilder.Entity("ItMe.Database.DbJob", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Company");
+
+                    b.Property<int>("CvId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("End")
+                        .IsRequired();
+
+                    b.Property<string>("Start")
+                        .IsRequired();
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CvId");
+
+                    b.ToTable("Jobs");
                 });
 
             modelBuilder.Entity("ItMe.Database.DbPerson", b =>
@@ -120,11 +162,27 @@ namespace ItMe.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ItMe.Database.DbCv", b =>
+                {
+                    b.HasOne("ItMe.Database.DbPerson", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("ItMe.Database.DbFeature", b =>
                 {
                     b.HasOne("ItMe.Database.DbPerson", "Person")
                         .WithMany("Features")
                         .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ItMe.Database.DbJob", b =>
+                {
+                    b.HasOne("ItMe.Database.DbCv", "Cv")
+                        .WithMany("Jobs")
+                        .HasForeignKey("CvId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

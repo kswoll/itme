@@ -9,7 +9,12 @@ namespace ItMe.Utils
         public int? Month { get; }
         public int? Day { get; }
 
-        public PartialDate(int? year, int? month, int? day)
+        private static readonly PartialDateFormat[] DefaultFormat =
+        {
+            PartialDateField.Month, " ", PartialDateField.Day, ", ", PartialDateField.Year
+        };
+
+        public PartialDate(int? year = null, int? month = null, int? day = null)
         {
             Year = year;
             Month = month;
@@ -33,7 +38,7 @@ namespace ItMe.Utils
 
         public override string ToString()
         {
-            return ToString(PartialDateField.Month, " ", PartialDateField.Day, PartialDateFormat.Suffix(", "), PartialDateField.Year);
+            return ToString(DefaultFormat);
         }
 
         public int? this[PartialDateField field]
@@ -56,6 +61,8 @@ namespace ItMe.Utils
 
         public string ToString(params PartialDateFormat[] formats)
         {
+            formats = formats.Length == 0 ? DefaultFormat : formats;
+
             var builder = new StringBuilder();
             var date = new DateTime(Year ?? 1, Month ?? 1, Day ?? 1);
             for (var i = 0; i < formats.Length; i++)
@@ -82,8 +89,12 @@ namespace ItMe.Utils
                     case PartialDateField.Year:
                     case PartialDateField.Month:
                     case PartialDateField.Day:
-                        var value = date.ToString(format.Format);
-                        builder.Append(value);
+                        var value = this[format.Field];
+                        if (value != null)
+                        {
+                            var formattedValue = date.ToString(" " + format.Format).Trim();
+                            builder.Append(formattedValue);
+                        }
                         break;
                 }
             }
