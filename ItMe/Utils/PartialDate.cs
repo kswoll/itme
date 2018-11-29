@@ -90,5 +90,27 @@ namespace ItMe.Utils
 
             return builder.ToString();
         }
+
+        public bool Equals(PartialDate other)
+        {
+            return Year == other.Year && Month == other.Month && Day == other.Day;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is PartialDate other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Year.GetHashCode();
+                hashCode = (hashCode * 397) ^ Month.GetHashCode();
+                hashCode = (hashCode * 397) ^ Day.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 }

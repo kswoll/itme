@@ -23,6 +23,9 @@ namespace ItMe.Pages
         [BindProperty]
         public string Password { get; set; }
 
+        [BindProperty]
+        public string InvitationCode { get; set; }
+
         private readonly ItMeDb db;
         private readonly AuthManager authManager;
 
@@ -38,6 +41,11 @@ namespace ItMe.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (InvitationCode != "awerawerarhuiaewryarukalsdf")
+            {
+                return Unauthorized();
+            }
+
             var dbPerson = new DbPerson
             {
                 Email = Email,
