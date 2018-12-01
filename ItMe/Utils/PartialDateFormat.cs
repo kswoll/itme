@@ -19,7 +19,7 @@ namespace ItMe.Utils
                     Format = "yyyy";
                     break;
                 case PartialDateField.Month:
-                    Format = "MMM";
+                    Format = "MMMM";
                     break;
                 case PartialDateField.Day:
                     Format = "d";

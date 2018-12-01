@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -37,6 +38,22 @@ namespace ItMe.Utils
 
         public static PartialDate Parse(string s, PartialDateFormat[][] patterns)
         {
+            if (!TryParse(s, out var result))
+                throw new FormatException($"Could not parse '{s}'");
+            return result;
+        }
+
+        public static bool TryParse(string s, out PartialDate result)
+        {
+            return TryParse(s, out result, new[] { DefaultFormat, MonthYearFormat, YearFormat });
+        }
+
+        public static bool TryParse(string s, out PartialDate result, PartialDateFormat[][] patterns)
+        {
+            int? year = null;
+            int? month = null;
+            int? day = null;
+
             foreach (var pattern in patterns)
             {
                 var literals = new Queue<PartialDateFormat>(pattern.Where(x => x.Field.IsLiteralField()));
@@ -44,11 +61,43 @@ namespace ItMe.Utils
                 {
                     if (format.Field.IsDateField())
                     {
-                        var nextLiteral = literals.Dequeue();
+                        PartialDateFormat? nextLiteral = literals.Count > 0 ? (PartialDateFormat?)literals.Dequeue() : null;
+                        var nextLiteralIndex = nextLiteral == null ? s.Length : s.IndexOf(nextLiteral.Value.Format, StringComparison.Ordinal);
+                        if (nextLiteralIndex == -1)
+                        {
+                            goto next;
+                        }
 
+                        var datePart = s.Substring(0, nextLiteralIndex);
+                        if (!DateTime.TryParseExact(" " + datePart, " " + format.Format, null, DateTimeStyles.None, out var dateComponent))
+                        {
+                            goto next;
+                        }
+
+                        switch (format.Field)
+                        {
+                            case PartialDateField.Year:
+                                year = dateComponent.Year;
+                                break;
+                            case PartialDateField.Month:
+                                month = dateComponent.Month;
+                                break;
+                            case PartialDateField.Day:
+                                day = dateComponent.Day;
+                                break;
+                        }
+
+                        s = s.Substring(nextLiteralIndex + (nextLiteral?.Format.Length ?? 0));
                     }
                 }
+                result = new PartialDate(year, month, day);
+                return true;
+
+                next: ;
             }
+
+            result = default;
+            return false;
         }
 
         public string Encode()
