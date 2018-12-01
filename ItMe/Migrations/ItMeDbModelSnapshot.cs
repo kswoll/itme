@@ -58,7 +58,8 @@ namespace ItMe.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonId");
+                    b.HasIndex("PersonId")
+                        .IsUnique();
 
                     b.ToTable("Cvs");
                 });
@@ -90,10 +91,25 @@ namespace ItMe.Migrations
 
                     b.Property<int>("CvId");
 
+                    b.HasKey("Id");
+
+                    b.HasIndex("CvId");
+
+                    b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("ItMe.Database.DbJobRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<string>("Description");
 
                     b.Property<string>("End")
                         .IsRequired();
+
+                    b.Property<int>("JobId");
 
                     b.Property<string>("Start")
                         .IsRequired();
@@ -102,9 +118,9 @@ namespace ItMe.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CvId");
+                    b.HasIndex("JobId");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("JobRoles");
                 });
 
             modelBuilder.Entity("ItMe.Database.DbPerson", b =>
@@ -183,6 +199,14 @@ namespace ItMe.Migrations
                     b.HasOne("ItMe.Database.DbCv", "Cv")
                         .WithMany("Jobs")
                         .HasForeignKey("CvId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ItMe.Database.DbJobRole", b =>
+                {
+                    b.HasOne("ItMe.Database.DbJob", "Job")
+                        .WithMany("Roles")
+                        .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

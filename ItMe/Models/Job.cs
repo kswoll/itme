@@ -1,4 +1,5 @@
-﻿using ItMe.Utils;
+﻿using System.Collections.Generic;
+using ItMe.Utils;
 
 namespace ItMe.Models
 {
@@ -6,9 +7,7 @@ namespace ItMe.Models
     {
         public int Id { get; set; }
         public string Company { get; set; }
-        public PartialDate Start { get; set; }
-        public PartialDate End { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+
+        public List<JobRole> Roles { get; set; }
     }
 }

@@ -10,17 +10,20 @@
 <div class="cv">
     <div class="section">
         <div class="title">Work History</div>
+        @foreach (var job in Model.Cv.Jobs)
+        {
+            <div style="float: right;">
+                <a href="/cv/jobs/@job.Id"><i class="fas fa-edit"></i></a>
+            </div>
+            <div class="section-item">
+                @job.Company
+            </div>
+        }
+
         <div class="card-container">
-            @foreach (var job in Model.Cv.Jobs)
-            {
-                <div class="section-item">
-
-                </div>
-            }
-
             @if (AuthManager.IsLoggedIn)
             {
-                <a href="/cv/sections/new" class="card add">
+                <a href="/cv/jobs/new" class="card add">
                     <i class="fas fa-plus"></i>
                 </a>
             }

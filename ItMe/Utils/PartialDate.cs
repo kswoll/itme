@@ -50,6 +50,12 @@ namespace ItMe.Utils
 
         public static bool TryParse(string s, out PartialDate result, PartialDateFormat[][] patterns)
         {
+            if (s == null)
+            {
+                result = new PartialDate();
+                return true;
+            }
+
             int? year = null;
             int? month = null;
             int? day = null;

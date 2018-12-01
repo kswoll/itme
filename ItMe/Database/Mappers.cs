@@ -32,11 +32,16 @@ namespace ItMe.Database
                 .Select(x => new Job
                 {
                     Id = x.Id,
-                    Title = x.Title,
                     Company = x.Company,
-                    Description = x.Description,
-                    Start = x.Start,
-                    End = x.End
+                    Roles = x.Roles
+                        .Select(y => new JobRole
+                        {
+                            Title = y.Title,
+                            Description = y.Description,
+                            Start = y.Start,
+                            End = y.End
+                        })
+                        .ToList()
                 })
                 .ToList()
         };

@@ -1,0 +1,29 @@
+﻿@page "/cv/jobs/{jobId}/roles/{id?}"
+@using ItMe.Utils
+@model ItMe.Pages.EditJobRoleModel
+@inject AuthManager AuthManager
+
+@{
+    ViewData["Title"] = "EditJobRole";
+}
+
+<h2>EditJobRole</h2>
+
+<form method="POST" class="full-width" style="width: 500px;">
+    <labeled-control>
+        <lc-label>Title</lc-label>
+        <lc-control><input type="text" asp-for="Title" /></lc-control>
+    </labeled-control>    
+    <labeled-control>
+        <lc-label>Start Date</lc-label>
+        <lc-control><input type="text" asp-for="Start" /></lc-control>
+    </labeled-control>
+    <labeled-control>
+        <lc-label>End Date</lc-label>
+        <lc-control><input type="text" asp-for="End" /></lc-control>
+    </labeled-control>
+    
+    <div class="button-bar">
+        <button type="submit">Save</button>
+    </div>
+</form>

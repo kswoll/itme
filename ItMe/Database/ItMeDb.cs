@@ -12,6 +12,7 @@ namespace ItMe.Database
         public DbSet<DbBlogPost> BlogPosts { get; set; }
         public DbSet<DbCv> Cvs { get; set; }
         public DbSet<DbJob> Jobs { get; set; }
+        public DbSet<DbJobRole> JobRoles { get; set; }
 
         public ItMeDb(DbContextOptions options) : base(options)
         {
@@ -29,8 +30,8 @@ namespace ItMe.Database
             var partialFieldConverter = new ValueConverter<PartialDate, string>(
                 x => x.Encode(),
                 x => PartialDate.Decode(x));
-            modelBuilder.Entity<DbJob>().Property(x => x.Start).HasConversion(partialFieldConverter);
-            modelBuilder.Entity<DbJob>().Property(x => x.End).HasConversion(partialFieldConverter);
+            modelBuilder.Entity<DbJobRole>().Property(x => x.Start).HasConversion(partialFieldConverter);
+            modelBuilder.Entity<DbJobRole>().Property(x => x.End).HasConversion(partialFieldConverter);
         }
     }
 }
