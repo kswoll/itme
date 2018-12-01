@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using ItMe.Models;
 
@@ -22,6 +23,22 @@ namespace ItMe.Database
             Slug = post.Slug,
             Created = post.Created,
             LastUpdated = post.LastUpdated
+        };
+
+        public static Expression<Func<DbCv, Cv>> MapCv { get; } = cv => new Cv
+        {
+            Id = cv.Id,
+            Jobs = cv.Jobs
+                .Select(x => new Job
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Company = x.Company,
+                    Description = x.Description,
+                    Start = x.Start,
+                    End = x.End
+                })
+                .ToList()
         };
     }
 }

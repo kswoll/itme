@@ -1,0 +1,14 @@
+﻿@page
+@model ItMe.Pages.EditJobModel
+@{
+    ViewData["Title"] = "EditJob";
+}
+
+<h2>EditJob</h2>
+
+<form method="POST">
+    <labeled-control>
+        <lc-label>Company</lc-label>
+        <lc-control><input type="text" asp-for="Company" /></lc-control>
+    </labeled-control>
+</form>

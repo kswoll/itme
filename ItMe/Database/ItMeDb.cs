@@ -24,6 +24,7 @@ namespace ItMe.Database
             modelBuilder.Entity<DbPerson>().HasIndex(x => x.Email).IsUnique();
             modelBuilder.Entity<DbPerson>().HasIndex(x => x.Host).IsUnique();
             modelBuilder.Entity<DbBlogPost>().HasIndex(x => new { x.PersonId, x.Slug }).IsUnique();
+            modelBuilder.Entity<DbCv>().HasIndex(x => x.PersonId).IsUnique();
 
             var partialFieldConverter = new ValueConverter<PartialDate, string>(
                 x => x.Encode(),

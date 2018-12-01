@@ -1,0 +1,30 @@
+﻿@page
+@using ItMe.Utils
+@model ItMe.Pages.CvModel
+@inject AuthManager AuthManager
+
+@{
+    ViewData["Title"] = "Cv";
+}
+
+<div class="cv">
+    <div class="section">
+        <div class="title">Work History</div>
+        <div class="card-container">
+            @foreach (var job in Model.Cv.Jobs)
+            {
+                <div class="section-item">
+
+                </div>
+            }
+
+            @if (AuthManager.IsLoggedIn)
+            {
+                <a href="/cv/sections/new" class="card add">
+                    <i class="fas fa-plus"></i>
+                </a>
+            }
+        </div>
+    </div>
+</div>
+

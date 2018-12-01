@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ItMe.Utils
@@ -14,11 +16,39 @@ namespace ItMe.Utils
             PartialDateField.Month, " ", PartialDateField.Day, ", ", PartialDateField.Year
         };
 
+        private static readonly PartialDateFormat[] YearFormat = { PartialDateField.Year };
+
+        private static readonly PartialDateFormat[] MonthYearFormat =
+        {
+            PartialDateField.Month, " ", PartialDateField.Year
+        };
+
         public PartialDate(int? year = null, int? month = null, int? day = null)
         {
             Year = year;
             Month = month;
             Day = day;
+        }
+
+        public static PartialDate Parse(string s)
+        {
+            return Parse(s, new[] { DefaultFormat, MonthYearFormat, YearFormat });
+        }
+
+        public static PartialDate Parse(string s, PartialDateFormat[][] patterns)
+        {
+            foreach (var pattern in patterns)
+            {
+                var literals = new Queue<PartialDateFormat>(pattern.Where(x => x.Field.IsLiteralField()));
+                foreach (var format in pattern)
+                {
+                    if (format.Field.IsDateField())
+                    {
+                        var nextLiteral = literals.Dequeue();
+
+                    }
+                }
+            }
         }
 
         public string Encode()
