@@ -9,5 +9,6 @@ namespace ItMe.Models
         public List<Job> Jobs { get; set; }
         public List<ExternalProfile> Profiles { get; set; }
         public List<Language> Languages { get; set; }
+        public List<Skill> Skills { get; set; }
     }
 }

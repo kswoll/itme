@@ -344,7 +344,6 @@ footer > div {
 .side-by-side {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 25px;
 }
 
 .preview {
@@ -406,9 +405,14 @@ div.button-bar {
 
 .cv-column.side {
     margin-left: 30px;
-    min-width: 200px;
+    min-width: 250px;
 }
 
 ul {
     padding-left: 1.2em;
+}
+
+li a.edit {
+    display: block;
+    float: right;
 }

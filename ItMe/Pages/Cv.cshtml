@@ -85,6 +85,9 @@
                 {
                     <li>
                         <a href="@profile.Uri">@profile.Name</a>
+                        <a href="/cv/profiles/@profile.Id/edit" class="edit soft-icon">
+                            <i class="fas fa-edit"></i>
+                        </a>
                     </li>
                 }
             </ul>
@@ -110,18 +113,51 @@
                     {
                         <li>
                             @language.Name
+                            <a href="/cv/languages/@language.Id/edit" class="edit soft-icon">
+                                <i class="fas fa-edit"></i>
+                            </a>
                         </li>
                     }
                 </ul>
 
-                <div class="card-container">
-                    @if (AuthManager.IsLoggedIn)
-                    {
+                @if (AuthManager.IsLoggedIn)
+                {
+                    <div class="card-container">
                         <a href="/cv/languages/edit" class="card add">
                             <i class="fas fa-plus"></i>
                         </a>
+                    </div>
+                }
+            </div>
+        }
+        
+        @if (Model.Cv.Skills.Any() || AuthManager.IsLoggedIn)
+        {
+            <div class="section">
+                <div class="title">Skills</div>
+                <hr />
+        
+                <ul>
+                    @foreach (var skill in Model.Cv.Skills)
+                    {
+                        <li>
+                            @skill.Name
+                            <a href="/cv/skills/@skill.Id/edit" class="edit soft-icon">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            @skill.Description.ToMarkDown()
+                        </li>
                     }
-                </div>
+                </ul>
+
+                @if (AuthManager.IsLoggedIn)
+                {
+                    <div class="card-container">
+                        <a href="/cv/skills/edit" class="card add">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                }
             </div>
         }
     </div>

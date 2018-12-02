@@ -1,0 +1,44 @@
+﻿@page "/cv/skills/{id?}/edit"
+@model ItMe.Pages.EditSkillModel
+@{
+    ViewData["Title"] = "EditSkill";
+}
+
+<h2>Edit Skill</h2>
+
+<form method="POST" class="full-width" style="width: 100%;">
+    <labeled-control>
+        <lc-label>Name</lc-label>
+        <lc-control><input type="text" asp-for="Name" /></lc-control>
+    </labeled-control>
+    <div class="side-by-side">
+        <labeled-control>
+            <lc-label>Description</lc-label>
+            <lc-control>
+                <textarea oninput="updatePreview('description-preview', this.value)" required asp-for="@Model.Description" style="height: 300px;" id="description-body" class="editor"></textarea>
+            </lc-control>
+        </labeled-control>
+        <labeled-control>
+            <lc-label>Preview</lc-label>
+            <lc-control>
+                <div style="height: 300px;" id="description-preview" class="preview">
+                </div>
+            </lc-control>
+        </labeled-control>
+    </div>
+
+    <div class="button-bar">
+        <button type="submit">Save</button>
+    </div>
+</form>
+
+<script>
+    function updatePreview(preview, value) {
+        document.getElementById(preview).innerHTML = toMarkDown(value);
+    }
+
+    updatePreview('description-preview', document.getElementById('description').value);
+
+    synchronizeScroll("description", "description-preview");
+</script>
+

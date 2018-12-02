@@ -60,6 +60,14 @@ namespace ItMe.Database
                     Id = x.Id,
                     Name = x.Name
                 })
+                .ToList(),
+            Skills = cv.Skills
+                .Select(x => new Skill
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description
+                })
                 .ToList()
         };
     }

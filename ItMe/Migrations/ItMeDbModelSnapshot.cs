@@ -208,6 +208,25 @@ namespace ItMe.Migrations
                     b.ToTable("PersonLogins");
                 });
 
+            modelBuilder.Entity("ItMe.Database.DbSkill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CvId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CvId");
+
+                    b.ToTable("Skills");
+                });
+
             modelBuilder.Entity("ItMe.Database.DbBlogPost", b =>
                 {
                     b.HasOne("ItMe.Database.DbPerson", "Person")
@@ -269,6 +288,14 @@ namespace ItMe.Migrations
                     b.HasOne("ItMe.Database.DbPerson", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ItMe.Database.DbSkill", b =>
+                {
+                    b.HasOne("ItMe.Database.DbCv", "Cv")
+                        .WithMany("Skills")
+                        .HasForeignKey("CvId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

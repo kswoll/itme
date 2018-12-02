@@ -9,5 +9,6 @@ namespace ItMe.Database
         public List<DbJob> Jobs { get; set; }
         public List<DbExternalProfile> Profiles { get; set; }
         public List<DbLanguage> Languages { get; set; }
+        public List<DbSkill> Skills { get; set; }
     }
 }
