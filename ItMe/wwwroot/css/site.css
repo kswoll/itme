@@ -262,6 +262,10 @@ app {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 100%);
 }
 
+.card:hover .body-full:after {
+    background: linear-gradient(to bottom, rgba(221, 221, 221, 0), rgba(221, 221, 221, 1) 100%);
+}
+
 .section {
     margin-bottom: 20px;
     background-color: #F9F9F9;
