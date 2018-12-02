@@ -1,0 +1,19 @@
+﻿@page "/cv/languages/edit/{id?}"
+@model ItMe.Pages.EditLanguageModel
+@{
+    ViewData["Title"] = "Edit Langugage";
+}
+
+<h2>Edit Language</h2>
+
+<form method="POST" class="full-width" style="width: 500px;">
+    <labeled-control>
+        <lc-label>Name</lc-label>
+        <lc-control><input type="text" asp-for="Name" /></lc-control>
+    </labeled-control>
+
+    <div class="button-bar">
+        <button type="submit">Save</button>
+    </div>
+</form>
+

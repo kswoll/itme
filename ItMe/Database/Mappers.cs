@@ -53,6 +53,13 @@ namespace ItMe.Database
                     Name = x.Name,
                     Uri = x.Uri
                 })
+                .ToList(),
+            Languages = cv.Languages
+                .Select(x => new Language
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
                 .ToList()
         };
     }

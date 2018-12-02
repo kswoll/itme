@@ -144,6 +144,23 @@ namespace ItMe.Migrations
                     b.ToTable("JobRoles");
                 });
 
+            modelBuilder.Entity("ItMe.Database.DbLanguage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CvId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CvId");
+
+                    b.ToTable("Languages");
+                });
+
             modelBuilder.Entity("ItMe.Database.DbPerson", b =>
                 {
                     b.Property<int>("Id")
@@ -236,6 +253,14 @@ namespace ItMe.Migrations
                     b.HasOne("ItMe.Database.DbJob", "Job")
                         .WithMany("Roles")
                         .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ItMe.Database.DbLanguage", b =>
+                {
+                    b.HasOne("ItMe.Database.DbCv", "Cv")
+                        .WithMany("Languages")
+                        .HasForeignKey("CvId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

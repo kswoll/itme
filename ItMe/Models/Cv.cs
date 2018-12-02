@@ -8,5 +8,6 @@ namespace ItMe.Models
         public string Blurb { get; set; }
         public List<Job> Jobs { get; set; }
         public List<ExternalProfile> Profiles { get; set; }
+        public List<Language> Languages { get; set; }
     }
 }

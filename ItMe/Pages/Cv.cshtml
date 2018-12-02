@@ -4,7 +4,7 @@
 @inject AuthManager AuthManager
 
 @{
-    ViewData["Title"] = "Cv";
+    ViewData["Title"] = "CV";
 }
 
 <div class="cv">
@@ -76,7 +76,7 @@
         </div>
     </div>
     <div class="cv-column side">
-        <div class="side section">
+        <div class="section">
             <div class="title">Profiles</div>
             <hr />
         
@@ -98,6 +98,32 @@
                 }
             </div>
         </div>
+        
+        @if (Model.Cv.Languages.Any() || AuthManager.IsLoggedIn)
+        {
+            <div class="section">
+                <div class="title">Languages</div>
+                <hr />
+        
+                <ul>
+                    @foreach (var language in Model.Cv.Languages)
+                    {
+                        <li>
+                            @language.Name
+                        </li>
+                    }
+                </ul>
+
+                <div class="card-container">
+                    @if (AuthManager.IsLoggedIn)
+                    {
+                        <a href="/cv/languages/edit" class="card add">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    }
+                </div>
+            </div>
+        }
     </div>
 </div>
 

@@ -225,7 +225,7 @@ app {
 
 .blog-post hr {
     border-top: 1px #30cef5 solid;
-    width: 80%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -270,6 +270,7 @@ app {
     margin-bottom: 20px;
     background-color: #F9F9F9;
     border: 1px lightgray solid;
+    border-radius: 5px;
     padding: 10px;
 }
 

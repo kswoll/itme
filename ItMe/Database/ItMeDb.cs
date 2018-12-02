@@ -14,6 +14,7 @@ namespace ItMe.Database
         public DbSet<DbJob> Jobs { get; set; }
         public DbSet<DbJobRole> JobRoles { get; set; }
         public DbSet<DbExternalProfile> ExternalProfiles { get; set; }
+        public DbSet<DbLanguage> Languages { get; set; }
 
         public ItMeDb(DbContextOptions options) : base(options)
         {
