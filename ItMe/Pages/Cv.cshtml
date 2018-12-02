@@ -85,9 +85,12 @@
                 {
                     <li>
                         <a href="@profile.Uri">@profile.Name</a>
-                        <a href="/cv/profiles/@profile.Id/edit" class="edit soft-icon">
-                            <i class="fas fa-edit"></i>
-                        </a>
+                        @if (AuthManager.IsLoggedIn)
+                        {
+                            <a href="/cv/profiles/@profile.Id/edit" class="edit soft-icon">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        }
                     </li>
                 }
             </ul>
@@ -113,9 +116,12 @@
                     {
                         <li>
                             @language.Name
-                            <a href="/cv/languages/@language.Id/edit" class="edit soft-icon">
-                                <i class="fas fa-edit"></i>
-                            </a>
+                            @if (AuthManager.IsLoggedIn)
+                            {
+                                <a href="/cv/languages/@language.Id/edit" class="edit soft-icon">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            }
                         </li>
                     }
                 </ul>
@@ -142,9 +148,12 @@
                     {
                         <li>
                             <div class="heading">@skill.Name</div>
-                            <a href="/cv/skills/@skill.Id/edit" class="edit soft-icon">
-                                <i class="fas fa-edit"></i>
-                            </a>
+                            @if (AuthManager.IsLoggedIn)
+                            {
+                                <a href="/cv/skills/@skill.Id/edit" class="edit soft-icon">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            }
                             @skill.Description.ToMarkDown()
                         </li>
                     }
