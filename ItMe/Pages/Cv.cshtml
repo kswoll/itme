@@ -141,7 +141,7 @@
                     @foreach (var skill in Model.Cv.Skills)
                     {
                         <li>
-                            @skill.Name
+                            <div class="heading">@skill.Name</div>
                             <a href="/cv/skills/@skill.Id/edit" class="edit soft-icon">
                                 <i class="fas fa-edit"></i>
                             </a>

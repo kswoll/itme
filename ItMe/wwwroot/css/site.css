@@ -416,3 +416,7 @@ li a.edit {
     display: block;
     float: right;
 }
+
+.heading {
+    font-weight: bold;
+}
