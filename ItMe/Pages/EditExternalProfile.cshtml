@@ -1,0 +1,22 @@
+﻿@page "/cv/profiles/edit/{id?}"
+@model ItMe.Pages.EditExternalProfileModel
+@{
+    ViewData["Title"] = "EditExternalProfile";
+}
+
+<h2>Edit Profile</h2>
+
+<form method="POST" class="full-width" style="width: 500px;">
+    <labeled-control>
+        <lc-label>Name</lc-label>
+        <lc-control><input type="text" asp-for="Name" /></lc-control>
+    </labeled-control>
+    <labeled-control>
+        <lc-label>Uri</lc-label>
+        <lc-control><input type="text" asp-for="Uri" /></lc-control>
+    </labeled-control>
+
+    <div class="button-bar">
+        <button type="submit">Save</button>
+    </div>
+</form>

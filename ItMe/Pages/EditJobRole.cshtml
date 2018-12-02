@@ -9,21 +9,47 @@
 
 <h2>EditJobRole</h2>
 
-<form method="POST" class="full-width" style="width: 500px;">
+<form method="POST" class="full-width" style="width: 100%;">
     <labeled-control>
         <lc-label>Title</lc-label>
         <lc-control><input type="text" asp-for="Title" /></lc-control>
-    </labeled-control>    
-    <labeled-control>
-        <lc-label>Start Date</lc-label>
-        <lc-control><input type="text" asp-for="Start" /></lc-control>
     </labeled-control>
-    <labeled-control>
-        <lc-label>End Date</lc-label>
-        <lc-control><input type="text" asp-for="End" /></lc-control>
-    </labeled-control>
+    <div class="side-by-side">
+        <labeled-control>
+            <lc-label>Start Date</lc-label>
+            <lc-control><input type="text" asp-for="Start" /></lc-control>
+        </labeled-control>
+        <labeled-control>
+            <lc-label>End Date</lc-label>
+            <lc-control><input type="text" asp-for="End" /></lc-control>
+        </labeled-control>
+    </div>
+    <div class="side-by-side">
+        <labeled-control>
+            <lc-label>Description</lc-label>
+            <lc-control>
+                <textarea oninput="updatePreview('description-preview', this.value)" required asp-for="@Model.Description" style="height: 300px;" id="description" class="editor"></textarea>
+            </lc-control>
+        </labeled-control>
+        <labeled-control>
+            <lc-label>Preview</lc-label>
+            <lc-control>
+                <div style="height: 300px;" id="description-preview" class="preview">
+                </div>
+            </lc-control>
+        </labeled-control>
+    </div>
     
     <div class="button-bar">
         <button type="submit">Save</button>
     </div>
 </form>
+
+<script>
+    function updatePreview(preview, value) {
+        document.getElementById(preview).innerHTML = toMarkDown(value);
+    }
+
+    updatePreview('description-preview', document.getElementById('description').value);
+    synchronizeScroll("description", "description-preview");
+</script>

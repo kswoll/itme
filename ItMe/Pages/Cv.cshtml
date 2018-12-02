@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/cv"
 @using ItMe.Utils
 @model ItMe.Pages.CvModel
 @inject AuthManager AuthManager
@@ -8,25 +8,95 @@
 }
 
 <div class="cv">
-    <div class="section">
-        <div class="title">Work History</div>
-        @foreach (var job in Model.Cv.Jobs)
+    <div class="cv-column">
+        @if (Model.Cv.Blurb != null || AuthManager.IsLoggedIn)
         {
-            <div style="float: right;">
-                <a href="/cv/jobs/@job.Id"><i class="fas fa-edit"></i></a>
-            </div>
-            <div class="section-item">
-                @job.Company
+            <div class="section">
+                @if (Model.Cv.Blurb != null && AuthManager.IsLoggedIn)
+                {
+                    <div class="title-bar">
+                        <div class="title">About Me</div>
+
+                        <a class="button soft-icon" href="/cv/edit"><i class="fas fa-edit"></i></a>
+                    </div>
+                }
+                <div>@Model.Cv.Blurb</div>
+                
+                @if (Model.Cv.Blurb == null)
+                {
+                    <a href="/cv/edit" class="card add">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                }
             </div>
         }
+        <div class="section">
+            <div class="title">Employment History</div>
+        
+            <hr />
 
-        <div class="card-container">
-            @if (AuthManager.IsLoggedIn)
+            @foreach (var job in Model.Cv.Jobs)
             {
-                <a href="/cv/jobs/new" class="card add">
-                    <i class="fas fa-plus"></i>
-                </a>
+                <div class="section-item">
+                    <div class="title-bar">
+                        <div class="company">
+                            @job.Company
+                        </div>
+                        @if (AuthManager.IsLoggedIn)
+                        {
+                            <a class="button soft-icon" href="/cv/jobs/@job.Id"><i class="fas fa-edit"></i></a>
+                        }
+                    </div>
+                    @foreach (var role in job.Roles)
+                    {
+                        <div class="title">
+                            @role.Title
+                        </div>
+                        if (!role.Start.IsEmpty)
+                        {
+                            <div class="stint">
+                                @role.Start - @(role.End.IsEmpty ? "Present" : role.End.ToString())
+                            </div>
+                        }
+                        <div class="description">
+                            @role.Description.ToMarkDown()
+                        </div>
+                    }
+                </div>
             }
+
+            <div class="card-container">
+                @if (AuthManager.IsLoggedIn)
+                {
+                    <a href="/cv/jobs/new" class="card add">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="cv-column side">
+        <div class="side section">
+            <div class="title">Profiles</div>
+            <hr />
+        
+            <ul>
+                @foreach (var profile in Model.Cv.Profiles)
+                {
+                    <li>
+                        <a href="@profile.Uri">@profile.Name</a>
+                    </li>
+                }
+            </ul>
+
+            <div class="card-container">
+                @if (AuthManager.IsLoggedIn)
+                {
+                    <a href="/cv/profiles/edit" class="card add">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                }
+            </div>
         </div>
     </div>
 </div>

@@ -20,7 +20,14 @@
         
         @foreach (var role in Model.Roles)
         {
-            @role.Title
+            <div class="section-item">
+                <div style="float: right;">
+                    <a href="/cv/jobs/@Model.Id/roles/@role.Id"><i class="fas fa-edit"></i></a>
+                </div>
+                <div>
+                    @role.Title
+                </div>
+            </div>
         }
 
         <div class="card-container">

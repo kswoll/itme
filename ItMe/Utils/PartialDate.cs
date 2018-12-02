@@ -31,6 +31,8 @@ namespace ItMe.Utils
             Day = day;
         }
 
+        public bool IsEmpty => Year == null && Month == null && Day == null;
+
         public static PartialDate Parse(string s)
         {
             return Parse(s, new[] { DefaultFormat, MonthYearFormat, YearFormat });

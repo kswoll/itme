@@ -5,12 +5,12 @@ namespace ItMe.Utils
 {
     public static class StringExtensions
     {
-        public static string Summarize(this string s, int maxLength = 250)
+        public static string Summarize(this string s, int maxLength = 500)
         {
             if (s.Length < maxLength)
                 return s;
             else
-                return s.Substring(0, maxLength) + "…";
+                return s.Substring(0, maxLength);
         }
 
         public static IHtmlContent ToMarkDown(this string s, bool removeLinks = false)

@@ -54,6 +54,8 @@ namespace ItMe.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Blurb");
+
                     b.Property<int>("PersonId");
 
                     b.HasKey("Id");
@@ -62,6 +64,25 @@ namespace ItMe.Migrations
                         .IsUnique();
 
                     b.ToTable("Cvs");
+                });
+
+            modelBuilder.Entity("ItMe.Database.DbExternalProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CvId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Uri");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CvId");
+
+                    b.ToTable("ExternalProfiles");
                 });
 
             modelBuilder.Entity("ItMe.Database.DbFeature", b =>
@@ -183,6 +204,14 @@ namespace ItMe.Migrations
                     b.HasOne("ItMe.Database.DbPerson", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ItMe.Database.DbExternalProfile", b =>
+                {
+                    b.HasOne("ItMe.Database.DbCv", "Cv")
+                        .WithMany("Profiles")
+                        .HasForeignKey("CvId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

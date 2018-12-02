@@ -28,6 +28,7 @@ namespace ItMe.Database
         public static Expression<Func<DbCv, Cv>> MapCv { get; } = cv => new Cv
         {
             Id = cv.Id,
+            Blurb = cv.Blurb,
             Jobs = cv.Jobs
                 .Select(x => new Job
                 {
@@ -36,12 +37,21 @@ namespace ItMe.Database
                     Roles = x.Roles
                         .Select(y => new JobRole
                         {
+                            Id = y.Id,
                             Title = y.Title,
                             Description = y.Description,
                             Start = y.Start,
                             End = y.End
                         })
                         .ToList()
+                })
+                .ToList(),
+            Profiles = cv.Profiles
+                .Select(x => new ExternalProfile
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Uri = x.Uri
                 })
                 .ToList()
         };
