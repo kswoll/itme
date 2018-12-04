@@ -8,18 +8,18 @@
 }
 
 <div class="cv">
-    <div class="cv-column">
+    <div class="cv-column cv-column-main">
         @if (Model.Cv.Blurb != null || AuthManager.IsLoggedIn)
         {
             <div class="section">
-                @if (Model.Cv.Blurb != null && AuthManager.IsLoggedIn)
-                {
-                    <div class="title-bar">
-                        <div class="title">About Me</div>
+                <div class="title-bar">
+                    <div class="title">About Me</div>
 
+                    @if (Model.Cv.Blurb != null && AuthManager.IsLoggedIn)
+                    {
                         <a class="button soft-icon" href="/cv/edit"><i class="fas fa-edit"></i></a>
-                    </div>
-                }
+                    }
+                </div>
                 <div>@Model.Cv.Blurb</div>
                 
                 @if (Model.Cv.Blurb == null)
