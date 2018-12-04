@@ -32,6 +32,7 @@ namespace ItMe
             services.AddHttpContextAccessor();
             services.AddScoped<AuthManager>();
             services.AddScoped<GlobalsManager>();
+            services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
