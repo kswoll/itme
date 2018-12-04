@@ -2,6 +2,7 @@
 using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
+using Amazon.SimpleEmail;
 
 namespace ItMe.Utils
 {
@@ -12,6 +13,14 @@ namespace ItMe.Utils
             var awsAccessKey = Environment.GetEnvironmentVariable("ITME_AWS_ACCESS_KEY_ID");
             var awsSecret = Environment.GetEnvironmentVariable("ITME_AWS_SECRET_ACCESS_KEY");
             var client = new AmazonS3Client(new BasicAWSCredentials(awsAccessKey, awsSecret), RegionEndpoint.USWest2);
+            return client;
+        }
+
+        public static AmazonSimpleEmailServiceClient CreateEmailClient()
+        {
+            var awsAccessKey = Environment.GetEnvironmentVariable("ITME_AWS_ACCESS_KEY_ID");
+            var awsSecret = Environment.GetEnvironmentVariable("ITME_AWS_SECRET_ACCESS_KEY");
+            var client = new AmazonSimpleEmailServiceClient(new BasicAWSCredentials(awsAccessKey, awsSecret), RegionEndpoint.USWest2);
             return client;
         }
     }

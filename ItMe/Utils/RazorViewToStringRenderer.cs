@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -19,69 +24,72 @@ namespace ItMe.Utils
         private readonly IRazorViewEngine viewEngine;
         private readonly ITempDataProvider tempDataProvider;
         private readonly IServiceProvider serviceProvider;
+        private readonly IRazorPageActivator activator;
+        private readonly IHttpContextAccessor httpContext;
+        private readonly IActionContextAccessor actionContext;
 
-        public RazorViewToStringRenderer(IRazorViewEngine viewEngine, ITempDataProvider tempDataProvider, IServiceProvider serviceProvider)
+        public RazorViewToStringRenderer(IRazorViewEngine viewEngine, ITempDataProvider tempDataProvider, IServiceProvider serviceProvider, IRazorPageActivator activator, IHttpContextAccessor httpContext, IActionContextAccessor actionContext)
         {
             this.viewEngine = viewEngine;
             this.tempDataProvider = tempDataProvider;
             this.serviceProvider = serviceProvider;
+            this.activator = activator;
+            this.httpContext = httpContext;
+            this.actionContext = actionContext;
         }
 
         public async Task<string> RenderViewToStringAsync<TModel>(string viewName, TModel model)
         {
-            var actionContext = GetActionContext();
-            var view = FindView(actionContext, viewName);
+            var httpContext = this.httpContext.HttpContext;
+            var actionContext = new ActionContext(httpContext, httpContext.GetRouteData(), this.actionContext.ActionContext.ActionDescriptor);
+
+            var page = (Page)FindPage(actionContext, viewName);
+
+            var view = new RazorView(viewEngine, 
+                activator,
+                new List<IRazorPage>(),
+                page, 
+                HtmlEncoder.Default,
+                new DiagnosticListener("ViewRenderService"));
 
             using (var output = new StringWriter())
             {
                 var viewContext = new ViewContext(
                     actionContext,
                     view,
-                    new ViewDataDictionary<TModel>(
-                        metadataProvider: new EmptyModelMetadataProvider(),
-                        modelState: new ModelStateDictionary())
+                    new ViewDataDictionary<TModel>(metadataProvider: new EmptyModelMetadataProvider(), modelState: new ModelStateDictionary())
                     {
                         Model = model
                     },
-                    new TempDataDictionary(
-                        actionContext.HttpContext,
-                        tempDataProvider),
+                    new TempDataDictionary(actionContext.HttpContext, tempDataProvider),
                     output,
                     new HtmlHelperOptions());
 
-                await view.RenderAsync(viewContext);
+                page.PageContext = new PageContext
+                {
+                    ViewData = viewContext.ViewData
+                };
+
+                page.ViewContext = viewContext;
+                
+                activator.Activate(page, viewContext);
+
+                await page.ExecuteAsync();
 
                 return output.ToString();
             }
         }
 
-        private IView FindView(ActionContext actionContext, string viewName)
+        private IRazorPage FindPage(ActionContext actionContext, string pageName)
         {
-            var getViewResult = viewEngine.GetView(executingFilePath: null, viewPath: viewName, isMainPage: true);
-            if (getViewResult.Success)
+            var findPageResult = viewEngine.FindPage(actionContext, pageName);
+            if (findPageResult.Page != null)
             {
-                return getViewResult.View;
+                return findPageResult.Page;
             }
-
-            var findViewResult = viewEngine.FindView(actionContext, viewName, isMainPage: true);
-            if (findViewResult.Success)
-            {
-                return findViewResult.View;
-            }
-
-            var searchedLocations = getViewResult.SearchedLocations.Concat(findViewResult.SearchedLocations);
-            var errorMessage = string.Join(
-                Environment.NewLine,
-                new[] { $"Unable to find view '{viewName}'. The following locations were searched:" }.Concat(searchedLocations));
-
+            
+            var errorMessage = $"Unable to find page '{pageName}'.";
             throw new InvalidOperationException(errorMessage);
-        }
-
-        private ActionContext GetActionContext()
-        {
-            var httpContext = new DefaultHttpContext { RequestServices = serviceProvider };
-            var routeData = new RouteData();
-            return new ActionContext(httpContext, routeData, new ActionDescriptor());
         }
     }
 }

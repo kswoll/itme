@@ -6,3 +6,15 @@
 
 <h2>Contact</h2>
 
+<form method="POST">
+    <labeled-control>
+        <lc-label>Name</lc-label>
+        <lc-control><input type="text" asp-for="Name" required /></lc-control>
+    </labeled-control>
+    
+    <div class="g-recaptcha" data-sitekey="6LdSzH4UAAAAAClLBmA0Ayth3sf2-uDS9RzWCE3E"></div>
+
+    <div class="button-bar">
+        <button type="submit">Send</button>
+    </div>
+</form>

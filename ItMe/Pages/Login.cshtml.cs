@@ -1,9 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using ItMe.Database;
 using ItMe.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace ItMe.Pages
 {
@@ -14,6 +18,9 @@ namespace ItMe.Pages
 
         [BindProperty]
         public string Password { get; set; }
+
+        [BindProperty(Name = "g-recaptcha-response")]
+        public string GoogleRecaptchaResponse { get; set; }
 
         private readonly ItMeDb db;
         private readonly AuthManager authManager;
@@ -34,6 +41,11 @@ namespace ItMe.Pages
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            if (!await RecaptchaUtils.ValidateResponse(GoogleRecaptchaResponse))
+            {
+                return Unauthorized();
             }
 
             var personLogin = await db.PersonLogins

@@ -13,8 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.3.29.12" />
-    <PackageReference Include="AWSSDK.S3" Version="3.3.28" />
+    <PackageReference Include="AWSSDK.Core" Version="3.3.29.13" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.30.1" />
+    <PackageReference Include="AWSSDK.SimpleEmail" Version="3.3.7.15" />
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.8.10" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -32,6 +33,9 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\Login.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\Shared\_EmailLayout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>

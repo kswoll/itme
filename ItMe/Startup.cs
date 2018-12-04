@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,7 @@ namespace ItMe
             services.AddDbContext<ItMeDb>(options => options.UseSqlServer(connection));
 
             services.AddHttpContextAccessor();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<AuthManager>();
             services.AddScoped<GlobalsManager>();
             services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();

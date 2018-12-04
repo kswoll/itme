@@ -425,3 +425,8 @@ li a.edit {
 .heading {
     font-weight: bold;
 }
+
+.g-recaptcha {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}

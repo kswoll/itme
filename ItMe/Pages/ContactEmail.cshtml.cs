@@ -9,6 +9,8 @@ namespace ItMe.Pages
 {
     public class ContactEmailModel : PageModel
     {
+        public string Name { get; set; }
+
         public void OnGet()
         {
 
