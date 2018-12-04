@@ -249,6 +249,7 @@ app {
 .card .body {
     overflow: hidden;
     position: relative;
+    flex-grow: 1;
 }
 
 .card .body-full:after {
