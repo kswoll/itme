@@ -1,9 +1,8 @@
 ﻿@page
+@using ItMe.Utils
 @model ItMe.Pages.ContactEmailModel
 @{
     Layout = "~/Pages/Shared/_EmailLayout.cshtml";
 }
 
-<h2>ContactEmail</h2>
-
-@Model.Name
+@Model.Body.ToMarkDown()

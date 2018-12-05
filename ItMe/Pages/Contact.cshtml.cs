@@ -16,6 +16,9 @@ namespace ItMe.Pages
         [BindProperty]
         public string Name { get; set; }
 
+        [BindProperty]
+        public string Body { get; set; }
+
         [BindProperty(Name = "g-recaptcha-response")]
         public string GoogleRecaptchaResponse { get; set; }
 
@@ -48,7 +51,8 @@ namespace ItMe.Pages
 
             var text = await renderer.RenderViewToStringAsync("ContactEmail", new ContactEmailModel
             {
-                Name = Name
+                Name = Name,
+                Body = Body
             });
 
             using (var client = Aws.CreateEmailClient())

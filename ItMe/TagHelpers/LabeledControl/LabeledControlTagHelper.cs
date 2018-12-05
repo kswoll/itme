@@ -7,7 +7,6 @@ namespace ItMe.TagHelpers.LabeledControl
     [RestrictChildren("lc-label", "lc-control")]
     public class LabeledControlTagHelper : TagHelper
     {
-
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var labeledControlContext = new LabeledControlContext();
