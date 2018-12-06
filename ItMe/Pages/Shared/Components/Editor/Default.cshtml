@@ -5,7 +5,8 @@
     <labeled-control>
         <lc-label>@Model.Label</lc-label>
         <lc-control>
-            <textarea oninput="updatePreview('@Model.Id-preview', this.value)" required="@Model.IsRequired" asp-for="@Model.Binding." style="height: 300px;" id="@Model.Id" class="editor"></textarea>
+            <textarea oninput="updatePreview('@Model.Id-preview', this.value)" required="@Model.IsRequired" name="@Model.Name" 
+                      style="height: 300px;" id="@Model.Id" class="editor">@Model.Value</textarea>
         </lc-control>
     </labeled-control>
     <labeled-control>

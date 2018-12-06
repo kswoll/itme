@@ -8,6 +8,7 @@ namespace ItMe.ViewComponents
         public string Id { get; set; }
         public string Label { get; set; }
         public bool IsRequired { get; set; }
-        public ModelExpression Binding { get; set; }
+        public string Name { get; set; }
+        public object Value { get; set; }
     }
 }

@@ -5,14 +5,15 @@ namespace ItMe.ViewComponents
 {
     public class EditorViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(string id, object model, ModelExpression aspFor = null, string label = null, bool required = false)
+        public IViewComponentResult Invoke(string id, object model, ModelExpression aspFor, string label, bool required)
         {
             return View(new EditorViewComponentModel
             {
                 Id = id,
                 Label = label,
                 IsRequired = required,
-                Binding = aspFor
+                Name = aspFor.Name,
+                Value = aspFor.Metadata.PropertyGetter(model)
             });
         }
     }

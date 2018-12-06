@@ -24,21 +24,9 @@
             <lc-control><input type="text" asp-for="End" /></lc-control>
         </labeled-control>
     </div>
-    <div class="side-by-side">
-        <labeled-control>
-            <lc-label>Description</lc-label>
-            <lc-control>
-                <textarea oninput="updatePreview('description-preview', this.value)" required asp-for="@Model.Description" style="height: 300px;" id="description" class="editor"></textarea>
-            </lc-control>
-        </labeled-control>
-        <labeled-control>
-            <lc-label>Preview</lc-label>
-            <lc-control>
-                <div style="height: 300px;" id="description-preview" class="preview">
-                </div>
-            </lc-control>
-        </labeled-control>
-    </div>
+
+    <vc:editor id="description" model="@Model" asp-for="Description" label="Description" required="false">
+    </vc:editor>
     
     <div class="button-bar">
         <button type="submit">Save</button>
