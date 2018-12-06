@@ -44,4 +44,8 @@ function synchronizeScroll(editorId, previewId) {
     });
 }
 
+function updatePreview(preview, value) {
+    document.getElementById(preview).innerHTML = toMarkDown(value);
+}
+
 

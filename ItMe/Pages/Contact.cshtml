@@ -11,22 +11,9 @@
         <lc-label>Name</lc-label>
         <lc-control><input type="text" asp-for="Name" required /></lc-control>
     </labeled-control>
-    <editor-with-preview />
-    <div class="side-by-side">
-        <labeled-control>
-            <lc-label>Description</lc-label>
-            <lc-control>
-                <textarea oninput="updatePreview('body-preview', this.value)" required asp-for="@Model.Body" style="height: 300px;" id="body" class="editor"></textarea>
-            </lc-control>
-        </labeled-control>
-        <labeled-control>
-            <lc-label>Preview</lc-label>
-            <lc-control>
-                <div style="height: 300px;" id="body-preview" class="preview">
-                </div>
-            </lc-control>
-        </labeled-control>
-    </div>
+    
+    <vc:editor id="description" model="@Model" asp-for="Body" label="Description" required="false">
+    </vc:editor>
     
     <div class="g-recaptcha" data-sitekey="6LdSzH4UAAAAAClLBmA0Ayth3sf2-uDS9RzWCE3E"></div>
 
@@ -34,12 +21,3 @@
         <button type="submit">Send</button>
     </div>
 </form>
-
-<script>
-    function updatePreview(preview, value) {
-        document.getElementById(preview).innerHTML = toMarkDown(value);
-    }
-
-    updatePreview('body-preview', document.getElementById('body').value);
-    synchronizeScroll("body", "body-preview");
-</script>
