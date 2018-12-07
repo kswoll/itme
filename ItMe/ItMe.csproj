@@ -36,9 +36,6 @@
     <Content Update="Pages\Login.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Pages\Shared\Components\Editor\Default.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Pages\Shared\_EmailLayout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

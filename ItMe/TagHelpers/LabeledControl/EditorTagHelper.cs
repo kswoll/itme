@@ -35,46 +35,54 @@ namespace ItMe.TagHelpers.LabeledControl
             var previewId = $"{id}-preview";
 
             var editorSideHelper = new LabeledControlTagHelper();
-            var editorSideHelperOutput = await editorSideHelper.GetOutput(context, "labeled-control", async (useCachedResult, encoder) =>
+            var editorSideHelperOutput = await editorSideHelper.GetOutput("labeled-control", async (editorContext, useCachedResult, encoder) =>
             {
                 var sideLabelHelper = new LabelTagHelper();
-                var sideLabelOutput = await sideLabelHelper.GetOutput(context, "lc-label", Label);
+                var sideLabelOutput = await sideLabelHelper.GetOutput(editorContext, "lc-label", Label);
 
                 var textAreaHelper = new TextAreaTagHelper(generator)
                 {
                     For = For,
                     ViewContext = ViewContext
                 };
-                var textAreaOutput = await textAreaHelper.GetOutput(context, "textarea");
+                var textAreaOutput = await textAreaHelper.GetOutput(editorContext, "textarea");
                 textAreaOutput.AddAttributes(new
                 {
                     id, style = $"height:{Size}", oninput = $"updatePreview('{previewId}', this.value)"
                 });
                 var sideControlHelper = new ControlTagHelper();
-                var sideControlOutput = await sideControlHelper.GetOutput(context, "lc-control", textAreaOutput);
+                var sideControlOutput = await sideControlHelper.GetOutput(editorContext, "lc-control", textAreaOutput);
 
                 return sideLabelOutput.ComposeWith(sideControlOutput);
             });
             var previewSideHelper = new LabeledControlTagHelper();
-            var previewSideHelperOutput = await previewSideHelper.GetOutput(context, "labeled-control", async (useCachedResult, encoder) =>
+            var previewSideHelperOutput = await previewSideHelper.GetOutput("labeled-control", async (previewContext, useCachedResult, encoder) =>
             {
                 var sideLabelHelper = new LabelTagHelper();
-                var sideLabelOutput = await sideLabelHelper.GetOutput(context, "lc-label", "Preview");
+                var sideLabelOutput = await sideLabelHelper.GetOutput(previewContext, "lc-label", "Preview");
 
                 var previewOutput = TagComposer.Compose("div", new
                 {
                     id = previewId, style = $"height:{Size}", @class = "preview"
                 });
                 var sideControlHelper = new ControlTagHelper();
-                var sideControlOutput = await sideControlHelper.GetOutput(context, "lc-control", previewOutput);
+                var sideControlOutput = await sideControlHelper.GetOutput(previewContext, "lc-control", previewOutput);
 
                 return sideLabelOutput.ComposeWith(sideControlOutput);
             });
 
             output.TagName = "div";
-            output.AddAttributes(new { @class = "side-by-side'" });
+            output.AddAttributes(new { @class = "side-by-side" });
             output.Content.AppendHtml(editorSideHelperOutput);
             output.Content.AppendHtml(previewSideHelperOutput);
+
+            var script = TagComposer.Compose("script");
+            script.Content.AppendHtml($@"    updatePreview('{previewId}', document.getElementById('{id}').value);
+    updatePreview('{previewId}', document.getElementById('{id}').value);
+
+    synchronizeScroll('{id}', '{previewId}');
+            ");
+            output.Content.AppendHtml(script);
         } 
     }
 }

@@ -347,11 +347,21 @@ footer > div {
     grid-template-columns: 1fr 1fr;
 }
 
+.side-by-side > * {
+    margin-left: 10px;
+}
+
+.side-by-side > *:first-child {
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
 .preview {
-    border: 1px darkgray solid;
+    border: 1px lightgray solid;
     width: 542.5px;
     overflow-y: auto;
     overflow-x: auto;
+    padding: 2px;
 }
 
 .markdown pre {
