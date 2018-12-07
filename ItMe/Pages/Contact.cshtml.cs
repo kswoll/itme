@@ -31,6 +31,7 @@ namespace ItMe.Pages
 
         public void OnGet()
         {
+            Body = "testtest";
         }
 
 /*
