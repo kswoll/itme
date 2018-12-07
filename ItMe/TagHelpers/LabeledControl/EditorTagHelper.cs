@@ -77,9 +77,8 @@ namespace ItMe.TagHelpers.LabeledControl
             output.Content.AppendHtml(previewSideHelperOutput);
 
             var script = TagComposer.Compose("script");
-            script.Content.AppendHtml($@"    updatePreview('{previewId}', document.getElementById('{id}').value);
+            script.Content.AppendHtml($@"
     updatePreview('{previewId}', document.getElementById('{id}').value);
-
     synchronizeScroll('{id}', '{previewId}');
             ");
             output.Content.AppendHtml(script);

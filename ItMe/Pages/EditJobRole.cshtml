@@ -32,12 +32,3 @@
         <button type="submit">Save</button>
     </div>
 </form>
-
-<script>
-    function updatePreview(preview, value) {
-        document.getElementById(preview).innerHTML = toMarkDown(value);
-    }
-
-    updatePreview('description-preview', document.getElementById('description').value);
-    synchronizeScroll("description", "description-preview");
-</script>
