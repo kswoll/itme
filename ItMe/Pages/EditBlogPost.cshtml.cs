@@ -21,7 +21,7 @@ namespace ItMe.Pages
 
         [BindProperty]
         public string Body { get; set; }
-        
+
         [BindProperty]
         public string Excerpt { get; set; }
 

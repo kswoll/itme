@@ -82,6 +82,6 @@ namespace ItMe.TagHelpers.LabeledControl
     synchronizeScroll('{id}', '{previewId}');
             ");
             output.Content.AppendHtml(script);
-        } 
+        }
     }
 }
