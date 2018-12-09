@@ -30,5 +30,12 @@ namespace ItMe.Utils
             }
             return new HtmlString($"<div class=\"markdown\">{markdown}</div>");
         }
+
+        public static IHtmlContent StripHtml(this IHtmlContent content)
+        {
+            var document = new HtmlDocument();
+            document.LoadHtml(content.ToString());
+            return new HtmlString(document.DocumentNode.InnerText.Trim());
+        }
     }
 }

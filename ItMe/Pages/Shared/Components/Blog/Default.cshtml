@@ -1,7 +1,7 @@
 ﻿@using ItMe.Utils
 @model ItMe.ViewModels.BlogViewComponentModel
 @inject AuthManager AuthManager
-    
+
 <div class="card-container">
     @if (AuthManager.IsLoggedIn)
     {
@@ -9,14 +9,14 @@
             <i class="fas fa-plus"></i>
         </a>
     }
-    
+
     @foreach (var blogPost in Model.BlogPosts)
     {
         <a class="card" href="@($"/blog/{blogPost.Slug}")">
             <div class="date">@blogPost.Created.ToString("MMM dd")</div>
             <div class="title">@blogPost.Title</div>
             <hr>
-            <div class="body @(blogPost.Excerpt == null ? "body-full" : "")">@((blogPost.Excerpt ?? blogPost.Body.Summarize()).ToMarkDown(removeLinks: true))</div>
+            <div class="body @(blogPost.Excerpt == null ? "body-full" : "")">@blogPost.GetExcerpt()</div>
         </a>
     }
 </div>

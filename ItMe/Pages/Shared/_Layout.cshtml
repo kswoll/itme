@@ -8,6 +8,18 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="google-site-verification" content="bV0ILv0ZspIFh_FOfwoO4QvGXGjHH1q1HshFC45dK4k" />
+
+        <meta property="og:type" content="website" />
+        @if (ViewData.ContainsKey("OpenGraph"))
+        {
+            var og = (OpenGraphInfo)ViewData["OpenGraph"];
+            <meta name="og:title" content="@og.Title" />
+            <meta name="og:description" content="@og.Description" />
+            if (og.Image != null)
+            {
+                <meta name="og:image" content="@og.Image" />
+            }
+        }
         <title>
             @if (!string.IsNullOrEmpty((string)ViewData["Title"]))
             {
@@ -15,7 +27,7 @@
             }
             @(GlobalsManager.Person?.Name ?? "Admin")
         </title>
-        
+
         @if (GlobalsManager.Person?.FavIconS3Url != null)
         {
             <link rel="icon" href="@GlobalsManager.Person?.FavIconS3Url" type="image/x-icon" />
@@ -29,10 +41,10 @@
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
         <link href="css/font-awesome/all.css" rel="stylesheet">
-        
+
         <script src="~/js/lib/commonmark.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-        
+
         <link href="~/js/lib/styles/a11y-light.min.css" rel="stylesheet">
         <script src="~/js/lib/highlight.min.js"></script>
         <script>window.hljs.initHighlightingOnLoad();</script>
@@ -42,7 +54,7 @@
     </head>
     <body>
         <div class="page-title">@(GlobalsManager.Person?.Name ?? "Admin")</div>
-    
+
         <div class="container body-content">
             @RenderBody()
             <hr style="margin-top: 100px;" />
@@ -65,7 +77,7 @@
                         }
                     </p>
                 </div>
-                
+
                 <div class="tab-bar">
                     <div><a href="/">Blog</a></div>
                     <div><a href="/cv">CV</a></div>

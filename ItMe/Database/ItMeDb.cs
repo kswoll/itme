@@ -16,6 +16,7 @@ namespace ItMe.Database
         public DbSet<DbExternalProfile> ExternalProfiles { get; set; }
         public DbSet<DbLanguage> Languages { get; set; }
         public DbSet<DbSkill> Skills { get; set; }
+        public DbSet<DbBlogPostComment> BlogPostComments { get; set; }
 
         public ItMeDb(DbContextOptions options) : base(options)
         {

@@ -49,7 +49,6 @@ namespace ItMe.Pages
                 return Unauthorized();
             }
 
-
             var text = await renderer.RenderViewToStringAsync("ContactEmail", new ContactEmailModel
             {
                 Name = Name,

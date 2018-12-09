@@ -15,6 +15,7 @@ namespace ItMe.TagHelpers.LabeledControl
         public string Id { get; set; }
         public string Label { get; set; }
         public string Size { get; set; } = "200px";
+        public bool Required { get; set; }
 
         [HtmlAttributeName("asp-for")]
         public ModelExpression For { get; set; }
@@ -48,7 +49,7 @@ namespace ItMe.TagHelpers.LabeledControl
                 var textAreaOutput = await textAreaHelper.GetOutput(editorContext, "textarea");
                 textAreaOutput.AddAttributes(new
                 {
-                    id, style = $"height:{Size}", oninput = $"updatePreview('{previewId}', this.value)"
+                    id, style = $"height:{Size}", oninput = $"updatePreview('{previewId}', this.value)", required = Required
                 });
                 var sideControlHelper = new ControlTagHelper();
                 var sideControlOutput = await sideControlHelper.GetOutput(editorContext, "lc-control", textAreaOutput);

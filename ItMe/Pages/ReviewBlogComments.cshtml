@@ -1,0 +1,17 @@
+﻿@page "/blog/review"
+@using ItMe.Utils
+@model ItMe.Pages.ReviewBlogCommentsModel
+
+@foreach (var comment in Model.Comments)
+{
+    <div class="blog-comment">
+        <div>@comment.AuthorName</div>
+        <div>@comment.Body.ToMarkDown()</div>
+
+        <form method="POST" asp-page-handler="approve">
+            <input type="hidden" name="id" value="@comment.Id" />
+
+            <button type="submit">Approve</button>
+        </form>
+    </div>
+}

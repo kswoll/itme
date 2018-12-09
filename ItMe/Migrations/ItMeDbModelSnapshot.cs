@@ -48,6 +48,33 @@ namespace ItMe.Migrations
                     b.ToTable("BlogPosts");
                 });
 
+            modelBuilder.Entity("ItMe.Database.DbBlogPostComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AuthorEmail");
+
+                    b.Property<string>("AuthorName");
+
+                    b.Property<int>("BlogPostId");
+
+                    b.Property<string>("Body");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<bool>("ShouldNotifyOnApproval");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogPostId");
+
+                    b.ToTable("BlogPostComments");
+                });
+
             modelBuilder.Entity("ItMe.Database.DbCv", b =>
                 {
                     b.Property<int>("Id")
@@ -232,6 +259,14 @@ namespace ItMe.Migrations
                     b.HasOne("ItMe.Database.DbPerson", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ItMe.Database.DbBlogPostComment", b =>
+                {
+                    b.HasOne("ItMe.Database.DbBlogPost", "BlogPost")
+                        .WithMany()
+                        .HasForeignKey("BlogPostId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

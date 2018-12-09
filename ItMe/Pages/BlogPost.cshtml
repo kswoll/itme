@@ -4,6 +4,11 @@
 @inject AuthManager AuthManager
 @{
     ViewData["Title"] = @Model.BlogPost.Title;
+    ViewData["OpenGraph"] = new OpenGraphInfo
+    {
+        Title = Model.BlogPost.Title,
+        Description = Model.BlogPost.GetExcerpt().StripHtml()
+    };
 }
 
 <div class="blog-post">
@@ -15,12 +20,51 @@
     }
 
     <div class="date">@Model.BlogPost.Created.ToString("MMM dd")</div>
-        
+
     <div class="title">@Model.BlogPost.Title</div>
-        
+
     <hr />
 
     <div class="body">
         @Model.BlogPost.Body.ToMarkDown()
     </div>
+
+    <div class="share-bar">
+        <a href="https://twitter.com/intent/tweet?text=@Model.BlogPost.Title&url=https://kirkwoll.com/blog/@Model.BlogPost.Slug"><i class="fab fa-twitter"></i></a>
+        <a href="javascript:void(0);" onclick="showComments();"><i class="far fa-comment"></i></a>
+    </div>
+
+    <div class="blog-comments">
+        <h4><i class="fas fa-quote-right"></i></h4>
+
+        <div class="blog-comment">
+            <form method="POST" class="full-width">
+                <labeled-control>
+                    <lc-label>Name</lc-label>
+                    <lc-control><input type="text" asp-for="CommentName" required /></lc-control>
+                </labeled-control>
+                <editor asp-for="CommentBody" label="Comment" required></editor>
+
+                <div class="g-recaptcha" data-sitekey="6LdSzH4UAAAAAClLBmA0Ayth3sf2-uDS9RzWCE3E"></div>
+
+                <div class="button-bar">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="blog-comment">
+                <div>@comment.AuthorName</div>
+                <div>@comment.Body.ToMarkDown()</div>
+            </div>
+        }
+    </div>
 </div>
+
+<script>
+    function showComments() {
+        document.querySelector(".blog-comments").style.display = "block";
+    }
+</script>

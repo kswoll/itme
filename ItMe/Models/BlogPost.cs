@@ -1,4 +1,6 @@
 ﻿using System;
+using ItMe.Utils;
+using Microsoft.AspNetCore.Html;
 using Newtonsoft.Json;
 
 namespace ItMe.Models
@@ -12,8 +14,13 @@ namespace ItMe.Models
         public string Slug { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastUpdated { get; set; }
-        
+
         [JsonIgnore]
         public string Url => $"/blog/{Slug}";
+
+        public IHtmlContent GetExcerpt()
+        {
+            return (Excerpt ?? Body.Summarize()).ToMarkDown(removeLinks: true);
+        }
     }
 }

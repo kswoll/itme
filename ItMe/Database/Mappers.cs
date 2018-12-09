@@ -70,5 +70,13 @@ namespace ItMe.Database
                 })
                 .ToList()
         };
+
+        public static Expression<Func<DbBlogPostComment, BlogPostComment>> MapBlogPostComment { get; } = comment => new BlogPostComment
+        {
+            Id = comment.Id,
+            Created = comment.Created,
+            AuthorName = comment.AuthorName,
+            Body = comment.Body
+        };
     }
 }
