@@ -239,7 +239,7 @@ app {
 .blog-post .author {
 }
 
-.blog-post .body {
+.blog-post > .body {
     margin-top: 50px;
     color: #888;
     font-family: Comfortaa;
@@ -466,4 +466,9 @@ li a.edit {
 
 .blog-comment textarea {
     height: 200px;
+}
+
+.blog-comment .author {
+    font-size: 1.5em;
+    font-weight: bold;
 }

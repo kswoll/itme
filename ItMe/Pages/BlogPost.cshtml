@@ -56,8 +56,11 @@
         @foreach (var comment in Model.Comments)
         {
             <div class="blog-comment">
-                <div>@comment.AuthorName</div>
-                <div>@comment.Body.ToMarkDown()</div>
+                <div class="author">
+                    <i class="fas fa-quote-right"></i>
+                    @comment.AuthorName
+                </div>
+                <div class="body">@comment.Body.ToMarkDown()</div>
             </div>
         }
     </div>
