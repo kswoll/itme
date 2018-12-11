@@ -359,6 +359,7 @@ footer > div {
 
 .preview {
     border: 1px lightgray solid;
+    background-color: white;
     width: 542.5px;
     overflow-y: auto;
     overflow-x: auto;
@@ -443,8 +444,18 @@ li a.edit {
 }
 
 .share-bar {
-    font-size: 2em;
+    font-size: 1.5em;
     float: right;
+    display: flex;
+}
+
+.share-bar > * {
+    margin-left: 20px;
+}
+
+.share-bar > *:hover, .share-bar > *:hover * {
+    text-decoration: none;
+    color: blue;
 }
 
 .share-bar * {
@@ -471,4 +482,5 @@ li a.edit {
 .blog-comment .author {
     font-size: 1.5em;
     font-weight: bold;
+    margin-bottom: 10px;
 }

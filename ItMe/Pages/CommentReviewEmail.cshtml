@@ -1,0 +1,8 @@
+﻿@page
+@using ItMe.Utils
+@model ItMe.Pages.CommentReviewEmailModel
+@{
+    Layout = "~/Pages/Shared/_EmailLayout.cshtml";
+}
+
+@Model.Body.ToMarkDown()

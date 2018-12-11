@@ -31,7 +31,13 @@
 
     <div class="share-bar">
         <a href="https://twitter.com/intent/tweet?text=@Model.BlogPost.Title&url=https://kirkwoll.com/blog/@Model.BlogPost.Slug"><i class="fab fa-twitter"></i></a>
-        <a href="javascript:void(0);" onclick="showComments();"><i class="far fa-comment"></i></a>
+        <a href="javascript:void(0);" onclick="toggleComments();">
+            <i class="far fa-comment"></i>
+            @if (Model.BlogPost.CommentCount > 0)
+            {
+                <text>(@Model.BlogPost.CommentCount)</text>
+            }
+        </a>
     </div>
 
     <div class="blog-comments">
@@ -67,7 +73,8 @@
 </div>
 
 <script>
-    function showComments() {
-        document.querySelector(".blog-comments").style.display = "block";
+    function toggleComments() {
+        let element = document.querySelector(".blog-comments");
+        element.style.display = element.style.display === "block" ? "" : "block";
     }
 </script>

@@ -14,6 +14,7 @@ namespace ItMe.Models
         public string Slug { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastUpdated { get; set; }
+        public int CommentCount { get; set; }
 
         [JsonIgnore]
         public string Url => $"/blog/{Slug}";

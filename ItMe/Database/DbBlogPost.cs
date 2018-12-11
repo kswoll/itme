@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ItMe.Database
 {
@@ -10,5 +11,7 @@ namespace ItMe.Database
         public string Slug { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastUpdated { get; set; }
+
+        public List<DbBlogPostComment> Comments { get; set; }
     }
 }

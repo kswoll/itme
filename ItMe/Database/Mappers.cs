@@ -22,7 +22,8 @@ namespace ItMe.Database
             Excerpt = post.Excerpt,
             Slug = post.Slug,
             Created = post.Created,
-            LastUpdated = post.LastUpdated
+            LastUpdated = post.LastUpdated,
+            CommentCount = post.Comments.Count(x => x.Status == BlogPostCommentStatus.Approved)
         };
 
         public static Expression<Func<DbCv, Cv>> MapCv { get; } = cv => new Cv
