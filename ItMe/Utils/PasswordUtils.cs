@@ -28,7 +28,7 @@ namespace ItMe.Utils
 			Array.Copy(hashBytes, 0, salt, 0, 16);
 			var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
 			var hash = pbkdf2.GetBytes(20);
-			
+
 			for (var i = 0; i < 20; i++)
 			    if (hashBytes[i+16] != hash[i])
 			        return false;

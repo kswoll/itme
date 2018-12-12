@@ -10,7 +10,7 @@ namespace ItMe.Pages
     {
         [BindProperty]
         public string Email { get; set; }
-        
+
         [BindProperty]
         public string Name { get; set; }
 

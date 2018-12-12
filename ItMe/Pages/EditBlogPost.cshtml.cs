@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -28,6 +29,10 @@ namespace ItMe.Pages
         private readonly ItMeDb db;
 
         private static readonly Regex slugPattern = new Regex(@"(\W)+");
+        private static readonly IReadOnlyCollection<string> prohibitedSlugs = new HashSet<string>(new[]
+        {
+            "review"
+        });
 
         public EditBlogPostModel(ItMeDb db)
         {
@@ -77,7 +82,7 @@ namespace ItMe.Pages
             int? counter = null;
             while (true)
             {
-                var isUnique = !await db.BlogPosts.AnyAsync(x => x.Slug == slug);
+                var isUnique = !prohibitedSlugs.Contains(slug) && !await db.BlogPosts.AnyAsync(x => x.Slug == slug);
                 if (isUnique)
                 {
                     return slug;
