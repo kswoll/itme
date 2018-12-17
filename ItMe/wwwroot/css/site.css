@@ -484,3 +484,21 @@ li a.edit {
     font-weight: bold;
     margin-bottom: 10px;
 }
+
+.advisory {
+    margin-top: 20px;
+    border: 1px lightgray solid;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: cornsilk;
+}
+
+.section ul {
+}
+
+.section li {
+    page-break-inside: avoid;
+}
+
+.section-item > .title-bar {
+}

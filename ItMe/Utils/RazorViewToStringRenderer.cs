@@ -45,10 +45,10 @@ namespace ItMe.Utils
 
             var page = (Page)FindPage(actionContext, viewName);
 
-            var view = new RazorView(viewEngine, 
+            var view = new RazorView(viewEngine,
                 activator,
                 new List<IRazorPage>(),
-                page, 
+                page,
                 HtmlEncoder.Default,
                 new DiagnosticListener("ViewRenderService"));
 
@@ -71,7 +71,7 @@ namespace ItMe.Utils
                 };
 
                 page.ViewContext = viewContext;
-                
+
                 activator.Activate(page, viewContext);
 
                 await page.ExecuteAsync();
@@ -87,7 +87,7 @@ namespace ItMe.Utils
             {
                 return findPageResult.Page;
             }
-            
+
             var errorMessage = $"Unable to find page '{pageName}'.";
             throw new InvalidOperationException(errorMessage);
         }

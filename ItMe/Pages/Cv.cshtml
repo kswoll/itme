@@ -21,7 +21,7 @@
                     }
                 </div>
                 <div>@Model.Cv.Blurb</div>
-                
+
                 @if (Model.Cv.Blurb == null)
                 {
                     <a href="/cv/edit" class="card add">
@@ -32,7 +32,7 @@
         }
         <div class="section">
             <div class="title">Employment History</div>
-        
+
             <hr />
 
             @foreach (var job in Model.Cv.Jobs)
@@ -49,17 +49,19 @@
                     </div>
                     @foreach (var role in job.Roles)
                     {
-                        <div class="title">
-                            @role.Title
-                        </div>
-                        if (!role.Start.IsEmpty)
-                        {
-                            <div class="stint">
-                                @role.Start - @(role.End.IsEmpty ? "Present" : role.End.ToString())
+                        <div class="no-page-break">
+                            <div class="title">
+                                @role.Title
                             </div>
-                        }
-                        <div class="description">
-                            @role.Description.ToMarkDown()
+                            @if (!role.Start.IsEmpty)
+                            {
+                                <div class="stint">
+                                    @role.Start - @(role.End.IsEmpty ? "Present" : role.End.ToString())
+                                </div>
+                            }
+                            <div class="description">
+                                @role.Description.ToMarkDown()
+                            </div>
                         </div>
                     }
                 </div>
@@ -79,7 +81,7 @@
         <div class="section">
             <div class="title">Profiles</div>
             <hr />
-        
+
             <ul>
                 @foreach (var profile in Model.Cv.Profiles)
                 {
@@ -87,7 +89,7 @@
                         <a href="@profile.Uri">@profile.Name</a>
                         @if (AuthManager.IsLoggedIn)
                         {
-                            <a href="/cv/profiles/@profile.Id/edit" class="edit soft-icon">
+                            <a href="/cv/profiles/@profile.Id" class="edit soft-icon">
                                 <i class="fas fa-edit"></i>
                             </a>
                         }
@@ -98,19 +100,19 @@
             <div class="card-container">
                 @if (AuthManager.IsLoggedIn)
                 {
-                    <a href="/cv/profiles/edit" class="card add">
+                    <a href="/cv/profiles/new" class="card add">
                         <i class="fas fa-plus"></i>
                     </a>
                 }
             </div>
         </div>
-        
+
         @if (Model.Cv.Languages.Any() || AuthManager.IsLoggedIn)
         {
             <div class="section">
                 <div class="title">Languages</div>
                 <hr />
-        
+
                 <ul>
                     @foreach (var language in Model.Cv.Languages)
                     {
@@ -118,7 +120,7 @@
                             @language.Name
                             @if (AuthManager.IsLoggedIn)
                             {
-                                <a href="/cv/languages/@language.Id/edit" class="edit soft-icon">
+                                <a href="/cv/languages/@language.Id" class="edit soft-icon">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             }
@@ -129,20 +131,20 @@
                 @if (AuthManager.IsLoggedIn)
                 {
                     <div class="card-container">
-                        <a href="/cv/languages/edit" class="card add">
+                        <a href="/cv/languages/new" class="card add">
                             <i class="fas fa-plus"></i>
                         </a>
                     </div>
                 }
             </div>
         }
-        
+
         @if (Model.Cv.Skills.Any() || AuthManager.IsLoggedIn)
         {
             <div class="section">
                 <div class="title">Skills</div>
                 <hr />
-        
+
                 <ul>
                     @foreach (var skill in Model.Cv.Skills)
                     {
@@ -150,7 +152,7 @@
                             <div class="heading">@skill.Name</div>
                             @if (AuthManager.IsLoggedIn)
                             {
-                                <a href="/cv/skills/@skill.Id/edit" class="edit soft-icon">
+                                <a href="/cv/skills/@skill.Id" class="edit soft-icon">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             }
@@ -162,7 +164,7 @@
                 @if (AuthManager.IsLoggedIn)
                 {
                     <div class="card-container">
-                        <a href="/cv/skills/new/edit" class="card add">
+                        <a href="/cv/skills/new" class="card add">
                             <i class="fas fa-plus"></i>
                         </a>
                     </div>
